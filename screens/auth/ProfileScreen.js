@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
 import MainContent from "../../components/MainContent";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const ProfileScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const user = useSelector(state => state.login.user);
 
     const handleLogout = async () => {
@@ -53,6 +54,10 @@ const ProfileScreen = ({ navigation }) => {
         setErrors(null);
     };
 
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+    };
+
     const renderInfoItem = (icon, label, value) => (
         <View style={styles.infoItem}>
             <View style={styles.iconContainer}>
@@ -67,8 +72,8 @@ const ProfileScreen = ({ navigation }) => {
 
     return (
         <MainContent>
-            {loading && <Loader />}
             <View style={styles.cardContainer}>
+                {loading && <Loader />}
                 <View style={styles.profileHeader}>
                     <View style={styles.profileImageContainer}>
                         <Icon name="person" size={80} color="#4285F4" style={styles.profileImage} />
@@ -84,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
                 <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
                     <Button
                         title="Editar perfil"
-                        onPress={() => navigation.navigate('EditProfile')}
+                        onPress={toggleModal}
                         typeButton="primary"
                     />
                 </Animatable.View>
@@ -98,6 +103,44 @@ const ProfileScreen = ({ navigation }) => {
                 </Animatable.View>
 
                 {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={isModalVisible}
+                    onRequestClose={toggleModal}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalTitle}>Editar Perfil</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Nombre"
+                                defaultValue={user.user.name}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Correo electrónico"
+                                defaultValue={user.user.email}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Contraseña"
+                                secureTextEntry={true}
+                            />
+                            <Button
+                                title="Guardar Cambios"
+                                onPress={toggleModal}
+                                typeButton="primary"
+                            />
+                            <Button
+                                title="Cancelar"
+                                onPress={toggleModal}
+                                typeButton="secondary"
+                            />
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </MainContent>
     );
@@ -121,7 +164,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#333',
         marginLeft: 10,
@@ -162,6 +205,32 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
+    },
+   
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    input: {
+        width: '100%',
+        backgroundColor: '#f4f4f4',
+        padding: 15,
+        borderRadius: 5,
+        marginBottom: 10,
     },
 });
 

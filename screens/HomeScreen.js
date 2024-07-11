@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import {  StyleSheet, View } from "react-native";
 import MainContent from "../components/MainContent";
 import DetailsCard from "../components/DetailsCard";
 

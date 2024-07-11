@@ -5,7 +5,7 @@ const Button = ({ onPress, title, typeButton }) => {
 
     const buttonColors = {
         default: '#6200EE',
-        primary: '#03A9F4',
+        primary: '#635bff',
         success: '#4CAF50',
         danger: '#F44336', 
         warning: '#FFC107',

@@ -14,7 +14,7 @@ const BottomTabNavigator = () => {
       activeColor="#635bff"
       inactiveColor="#FFFFFF"
       barStyle={{ 
-        backgroundColor: '#121621' 
+        backgroundColor: '#212734' 
       }}
       screenOptions={{
         headerShown: false,

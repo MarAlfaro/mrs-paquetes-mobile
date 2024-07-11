@@ -3,6 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/auth/LoginScreen";
 import DrawerNavigator from "./DrawerNavigator";
+import RecoverPasswordScreen from "../screens/RecoverPasswordScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+
 
 const Stack = createStackNavigator();
 
@@ -20,6 +23,8 @@ const MainStackNavigator = () => {
         >
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Dashboard" component={DrawerNavigator} />
+            <Stack.Screen name="RecoverPasswordScreen" component={RecoverPasswordScreen} />
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         </Stack.Navigator>
     );
 }
