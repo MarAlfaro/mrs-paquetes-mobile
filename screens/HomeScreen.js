@@ -1,12 +1,32 @@
 import React from "react";
-import {  StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { useSelector } from "react-redux";
 import MainContent from "../components/MainContent";
 import DetailsCard from "../components/DetailsCard";
 
 const HomeScreen = ({ navigation }) => {
+  // Obtén el nombre y rol del usuario desde el estado de Redux
+  const user = useSelector(state => state.login.user);
+  const userName = user.user.name || "Usuario";
+  const role = user.role || "default";
+
+  // Mensaje basado en el rol del usuario
+  const roleMessage = {
+    admin: `Bienvenido, ${userName}. Tienes acceso completo.`,
+    cliente: `Hola, ${userName}. Puedes ver y gestionar tus paquetes.`,
+    conductor: `Hola, ${userName}. Aquí está la información de tus entregas.`,
+    default: `Bienvenido a tu perfil, ${userName}.`
+  };
+
+  // Mensaje personalizado basado en el rol
+  const welcomeMessage = roleMessage[role];
+
   return (
     <MainContent>
       <View style={styles.container}>
+        {/* Muestra el mensaje personalizado */}
+        <Text style={styles.welcomeMessage}>{welcomeMessage}</Text>
+
         <DetailsCard
           title="Número de entregas"
           description="Detalles del número de entregas"
@@ -28,7 +48,7 @@ const HomeScreen = ({ navigation }) => {
 
         <DetailsCard
           title="Entregas pendientes"
-          description="Destalles de entregas pendientes"
+          description="Detalles de entregas pendientes"
           iconName="info-circle"
           typeCard="warning"
           statusText="10"
@@ -36,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
 
         <DetailsCard
           title="Número de clientes"
-          description="Detalles de numero de clientes"
+          description="Detalles de número de clientes"
           iconName="info-circle"
           typeCard="info"
           statusText="10000"
@@ -60,7 +80,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-  }
+    padding: 20,
+  },
+  welcomeMessage: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
 });
 
 export default HomeScreen;

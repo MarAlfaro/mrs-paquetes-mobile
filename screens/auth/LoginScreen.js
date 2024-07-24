@@ -1,5 +1,6 @@
+// screens/auth/LoginScreen.js
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { postData } from "../../api/client";
 import Input from "../../components/Input";
@@ -25,17 +26,19 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       });
 
-      if (response.hasOwnProperty("token")) {
-        dispatch(loginSuccess(response));
+      if (response.token) {
+        dispatch(loginSuccess({
+          user: response.user,
+          role: response.role,
+          token: response.token, // Asegúrate de incluir el token
+        }));
         navigation.navigate("Dashboard");
-      }
-
-      if (response.hasOwnProperty("error")) {
+      } else if (response.error) {
         setErrors(response.error);
       }
     } catch (error) {
       dispatch(loginFailure(error.message));
-      setErrors(error);
+      setErrors(error.message); // Asegúrate de que error.message esté presente
     } finally {
       setLoading(false);
     }
@@ -46,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleRecoverPassword = () => {
-    navigation.navigate("RecoverPasswordScreen"); // Navega a RecoverPasswordScreen
+    navigation.navigate("RecoverPasswordScreen");
   };
 
   const handleRegister = () => {
