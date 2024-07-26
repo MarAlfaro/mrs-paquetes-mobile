@@ -3,8 +3,8 @@ import axios from 'axios';
 const API_URL_BASE = process.env.EXPO_PUBLIC_API_URL;
 
 const fetchData = async (endpoint, data = {}, headers = {}) => {
-    try {        
-        const response = await axios.get(`${API_URL_BASE}/${endpoint}`, { 
+    try {
+        const response = await axios.get(`${API_URL_BASE}/${endpoint}`, {
             params: data,
             headers: {
                 'Content-Type': 'application/json',
