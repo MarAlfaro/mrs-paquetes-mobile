@@ -48,6 +48,9 @@ const LoginScreen = ({ navigation }) => {
   const handleRecoverPassword = () => {
     navigation.navigate("RecoverPasswordScreen"); // Navega a RecoverPasswordScreen
   };
+  const handleUpdatePassword = () => {
+    navigation.navigate("UpdatePasswordScreen"); // Navega a RecoverPasswordScreen
+  };
 
   const handleRegister = () => {
     navigation.navigate("RegisterScreen");
@@ -80,6 +83,9 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
         />
         <Text onPress={handleRecoverPassword} style={styles.contra}>
+          <Icon name="lock" size={16} color="#8590a5" /> ¿Olvidaste tu contraseña?{" "}
+        </Text>
+        <Text onPress={handleUpdatePassword} style={styles.contra}>
           <Icon name="lock" size={16} color="#8590a5" /> ¿Olvidaste tu contraseña?{" "}
         </Text>
         <Button

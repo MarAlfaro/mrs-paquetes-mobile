@@ -3,10 +3,12 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "
 import { Image, View, StyleSheet, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // o cualquier otra librería de iconos que prefieras
 import MisPaquetesScreen from "../screens/MisPaquetesScreen";
+
 import ProfileScreen from "../screens/auth/ProfileScreen";
 import SeguimientoScreen from "../screens/SeguimientoScreen";
 import TabNavigator from "./TabNavigator";
 import RecoverPasswordScreen from "../screens/RecoverPasswordScreen"; // Importa el componente correcto
+import UpdatePasswordScreen from "../screens/UpdatePasswordScreen"; 
 
 const Drawer = createDrawerNavigator();
 
@@ -93,6 +95,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="RecoverPassword"
         component={RecoverPasswordScreen} // Usa el componente correcto aquí
+        options={{ drawerLabel: () => null }} // Oculta la pantalla del menú de navegación
+      />
+      <Drawer.Screen
+        name="UpdatePassword"
+        component={UpdatePasswordScreen} // Usa el componente correcto aquí
         options={{ drawerLabel: () => null }} // Oculta la pantalla del menú de navegación
       />
     </Drawer.Navigator>
