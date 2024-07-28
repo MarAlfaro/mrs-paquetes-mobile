@@ -83,10 +83,10 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
         />
         <Text onPress={handleRecoverPassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" /> ¿Olvidaste tu contraseña?{" "}
+          <Icon name="lock" size={16} color="#8590a5" />{"¿Olvidaste tu contraseña?"}
         </Text>
         <Text onPress={handleUpdatePassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" /> ¿Olvidaste tu contraseña?{" "}
+          <Icon name="lock" size={16} color="#8590a5" />{"tengo un codigo"}
         </Text>
         <Button
           title="Iniciar sesión"
@@ -125,8 +125,7 @@ const styles = StyleSheet.create({
   contra: {
     color: "#8590a5",
     marginBottom: 15,
-    marginLeft: 60,
-    textAlign: "left",
+    textAlign: "center",
   },
   cuenta: {
     color: "#15b79f",
