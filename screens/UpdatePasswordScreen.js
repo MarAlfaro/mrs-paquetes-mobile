@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import axios from 'axios';
+import { postData } from '../api/client';
 
 const UpdatePasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
 
   const handleUpdatePassword = async () => {
     try {
-     await axios.post('http://192.168.0.17:80/mrs-paquetes-api/public/api/password/reset', {
+      await postData('password/reset', {
         email,
         otp,
         password,
@@ -17,8 +17,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
       Alert.alert('Éxito', 'Contraseña restablecida con éxito.');
       navigation.navigate('Login'); // Navegar a la pantalla de inicio de sesión
     } catch (error) {
-    
-      Alert.alert('Error', error.response ? error.response.data.message : 'No se pudo restablecer la contraseña. Intenta nuevamente.');
+      Alert.alert('Error', error.message || 'No se pudo restablecer la contraseña. Intenta nuevamente.');
     }
   };
 

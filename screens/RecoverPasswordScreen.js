@@ -1,13 +1,13 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet} from 'react-native';
+import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { postData } from '../api/client';
 
 const ResetPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
 
   const handlePasswordReset = async () => {
     try {
-     await axios.post('http://192.168.0.17:80/mrs-paquetes-api/public/api/password/forget-password', { email });
+      await postData('password/forget-password', { email });
       Alert.alert('Éxito', 'Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico.');
       navigation.navigate('Login'); 
     } catch (error) {
@@ -17,12 +17,12 @@ const ResetPasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={ styles.container }>
+    <View style={styles.container}>
       <TextInput
         placeholder="Correo electrónico"
         value={email}
         onChangeText={setEmail}
-        style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 20 }}
+        style={styles.input}
       />
       <Button title="Restablecer Contraseña" onPress={handlePasswordReset} />
     </View>
@@ -42,4 +42,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
 export default ResetPasswordScreen;
