@@ -12,9 +12,7 @@ const MisPaquetesScreen = () => {
   };
 
   const handleTrack = async (trackingNumber) => {
-    // Lógica de búsqueda y obtención de datos de seguimiento (puedes implementarla según tus necesidades)
-    // Aquí puedes llamar a tu API para obtener los datos de seguimiento del paquete
-    // Por simplicidad, aquí simularemos datos de seguimiento
+    // Simulación de datos de seguimiento
     const mockData = {
       trackingNumber,
       status: "En Camino",
@@ -38,32 +36,30 @@ const MisPaquetesScreen = () => {
 
   return (
     <MainContent>
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Ingrese el número de seguimiento"
-        value={trackingNumber}
-        onChangeText={handleInputChange}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Buscar</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Seguimiento de Paquetes</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ingrese el número de seguimiento"
+          value={trackingNumber}
+          onChangeText={handleInputChange}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Buscar</Text>
+        </TouchableOpacity>
 
-      {trackingData && (
-        <ScrollView style={styles.trackingResult}>
-          <Text style={styles.resultText}>Resultado del Seguimiento</Text>
-          {/* Visualización de resultados de seguimiento */}
-          {trackingData.history.map((event, index) => (
-            <View key={index} style={styles.eventContainer}>
-              <Text style={styles.eventStatus}>{event.status}</Text>
-              <Text style={styles.eventDate}>{event.date}</Text>
-            </View>
-          ))}
-        </ScrollView>
-      )}
-
-      {/* Otros componentes para mostrar el historial, si es necesario */}
-    </View>
+        {trackingData && (
+          <ScrollView style={styles.trackingResult}>
+            <Text style={styles.resultText}>Resultado del Seguimiento</Text>
+            {trackingData.history.map((event, index) => (
+              <View key={index} style={styles.eventContainer}>
+                <Text style={styles.eventStatus}>{event.status}</Text>
+                <Text style={styles.eventDate}>{event.date}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        )}
+      </View>
     </MainContent>
   );
 };
@@ -74,57 +70,69 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#00796b",
+    marginBottom: 20,
   },
   input: {
     width: "100%",
-    height: 40,
+    height: 50,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#00796b",
     marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    paddingHorizontal: 15,
+    borderRadius: 25,
+    backgroundColor: "#fff",
+    elevation: 3,
   },
   button: {
-    backgroundColor: "#635bff",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: "#00796b",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    elevation: 5,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
   trackingResult: {
     marginTop: 20,
     width: "100%",
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: "#fff",
-    padding: 10,
+    padding: 15,
+    elevation: 4,
   },
   resultText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 15,
+    color: "#00796b",
     textAlign: "center",
   },
   eventContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
   },
   eventStatus: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
+    color: "#333",
   },
   eventDate: {
     fontSize: 14,
-    color: "#666",
+    color: "#888",
   },
 });
 

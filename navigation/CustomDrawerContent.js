@@ -65,7 +65,7 @@ const CustomDrawerContent = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#212734',
+    backgroundColor: 'rgb(18, 22, 33)',
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',

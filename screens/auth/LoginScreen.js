@@ -1,4 +1,3 @@
-// screens/auth/LoginScreen.js
 import React, { useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { useDispatch } from "react-redux";
@@ -30,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
         dispatch(loginSuccess({
           user: response.user,
           role: response.role,
-          token: response.token, // Asegúrate de incluir el token
+          token: response.token, // incluir el token
         }));
         navigation.navigate("Dashboard");
       } else if (response.error) {
@@ -38,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
       }
     } catch (error) {
       dispatch(loginFailure(error.message));
-      setErrors(error.message); // Asegúrate de que error.message esté presente
+      setErrors(error.message);
     } finally {
       setLoading(false);
     }
@@ -50,9 +49,6 @@ const LoginScreen = ({ navigation }) => {
 
   const handleRecoverPassword = () => {
     navigation.navigate("RecoverPasswordScreen");
-  };
-  const handleUpdatePassword = () => {
-    navigation.navigate("UpdatePasswordScreen"); // Navega a RecoverPasswordScreen
   };
 
   const handleRegister = () => {
@@ -68,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
           source={require("../../assets/Artboard.png")}
           style={styles.logo}
         />
-        <Text style={styles.title}>¡Bienvenido a Mrs. Paquetes! </Text>
+        <Text style={styles.title}>¡Bienvenido a Mrs. Paquetes!</Text>
         <Input
           style={styles.input}
           placeholder="Email"
@@ -77,7 +73,6 @@ const LoginScreen = ({ navigation }) => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-
         <Input
           style={styles.input}
           placeholder="Contraseña"
@@ -88,9 +83,6 @@ const LoginScreen = ({ navigation }) => {
         <Text onPress={handleRecoverPassword} style={styles.contra}>
           <Icon name="lock" size={16} color="#8590a5" />{"¿Olvidaste tu contraseña?"}
         </Text>
-        <Text onPress={handleUpdatePassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" />{"tengo un codigo"}
-        </Text>
         <Button
           title="Iniciar sesión"
           onPress={handleLogin}
@@ -98,7 +90,7 @@ const LoginScreen = ({ navigation }) => {
         />
         <Text>¿No tienes cuenta? </Text>
         <Text onPress={handleRegister} style={styles.cuenta}>
-          Registrate{" "}
+          Regístrate{" "}
         </Text>
         {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
       </View>
@@ -113,8 +105,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     margin: 15,
-    marginTop: 150,
-    marginBottom: 150,
+    marginTop: 60,
+    marginBottom: 100,
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
   },
