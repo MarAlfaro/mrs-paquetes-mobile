@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await postData("login", {
+      const response = await postData("login-cliente", {
         email: email,
         password: password,
       });
@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
         dispatch(loginSuccess({
           user: response.user,
           role: response.role,
-          token: response.token, // Asegúrate de incluir el token
+          token: response.token,
         }));
         navigation.navigate("Dashboard");
       } else if (response.error) {
@@ -38,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
       }
     } catch (error) {
       dispatch(loginFailure(error.message));
-      setErrors(error.message); // Asegúrate de que error.message esté presente
+      setErrors(error);
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate("RecoverPasswordScreen");
   };
   const handleUpdatePassword = () => {
-    navigation.navigate("UpdatePasswordScreen"); // Navega a RecoverPasswordScreen
+    navigation.navigate("UpdatePasswordScreen");
   };
 
   const handleRegister = () => {
@@ -65,7 +65,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.container}>
         <Image
-          source={require("../../assets/Artboard.png")}
+          source={require("../../assets/logo-claro.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>¡Bienvenido a Mrs. Paquetes! </Text>
