@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, useColorScheme } from "react-native";
 import { useDispatch } from "react-redux";
 import { postData } from "../../api/client";
 import Button from "../../components/Button";
@@ -10,6 +10,7 @@ import Loader from "../../components/Loader";
 import { registerFailure, registerSuccess } from '../../redux/slice/registerSlice';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import { Theme } from '../../theme/Theme';
 
 
 const RegisterScreen = () => {
@@ -20,7 +21,26 @@ const RegisterScreen = () => {
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const colorScheme = useColorScheme();
+  const logoSource = colorScheme === 'dark' ? require('../../assets/logo-oscuro.png') : require('../../assets/logo-claro.png');
+
+  const isPasswordSecure = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+  };
+
   const handleRegister = async() => {
+    
+    if (!isPasswordSecure(password)) {
+      setErrors("La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.");
+      return;
+    }
+    
     setLoading(true);
     try {
       const response = await postData("register", {
@@ -56,7 +76,7 @@ const RegisterScreen = () => {
 
     <View style={styles.container}>
       <Image
-        source={require("../../assets/logo-claro.png")}
+        source={logoSource}
         style={styles.logo}
       />
       <Text style={styles.title}>¿Eres nuevo?, !Crea una cuenta! </Text>
@@ -97,20 +117,29 @@ const styles = StyleSheet.create({
     margin: 15,
     marginTop: 150,
     marginBottom: 150,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Theme.light.surface,
     borderRadius: 15,
+    $dark: {
+      backgroundColor: Theme.dark.primary
+    }
   },
   title: {
-    color: "#15b79f",
+    color: Theme.light.text,
     marginBottom: 20,
     fontSize: 15,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    $dark: {
+      color: Theme.dark.text
+    }
   },
   contra: {
-    color: "#8590a5",
+    color: Theme.light.text,
     marginBottom: 15,
     textAlign: "center",
+    $dark: {
+      color: Theme.dark.text
+    }
   },
   cuenta: {
     color: "#15b79f",

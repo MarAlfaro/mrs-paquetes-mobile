@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, Alert } from "react-native";
+import { Text, View, StyleSheet, Image, Alert, useColorScheme } from "react-native";
 import { useDispatch } from "react-redux";
 import { postData } from "../../api/client";
 import Button from "../../components/Button";
@@ -11,6 +11,7 @@ import { registerFailure, registerSuccess } from '../../redux/slice/registerSlic
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
+import { Theme } from '../../theme/Theme';
 
 
 const ConfirmationEmailScreen = () => {
@@ -20,6 +21,9 @@ const ConfirmationEmailScreen = () => {
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.register.user);
+
+    const colorScheme = useColorScheme();
+    const logoSource = colorScheme === 'dark' ? require('../../assets/logo-oscuro.png') : require('../../assets/logo-claro.png');
 
     const handleConfirmation = async() => {
         setLoading(true);
@@ -82,7 +86,7 @@ const ConfirmationEmailScreen = () => {
 
             <View style={styles.container}>
                 <Image
-                    source={require("../../assets/logo-claro.png")}
+                    source={logoSource}
                     style={styles.logo}
                 />
                 <Text style={styles.title}>Ingresa el codigo de verificacion!</Text>
@@ -103,7 +107,7 @@ const ConfirmationEmailScreen = () => {
 
                 <Button
                     title="Volver a enviar código de verficación"
-                    onPress={handleConfirmation}
+                    onPress={handleResendCode}
                     typeButton="warning"
                 />
                 {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
@@ -121,25 +125,37 @@ const styles = StyleSheet.create({
         margin: 15,
         marginTop: 150,
         marginBottom: 150,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: Theme.light.surface,
         borderRadius: 15,
+        $dark: {
+            backgroundColor: Theme.dark.primary
+        }
     },
     title: {
-        color: "#15b79f",
+        color: Theme.light.text,
         marginBottom: 20,
         fontSize: 15,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        $dark: {
+            color: Theme.dark.text
+        }
     },
     contra: {
-        color: "#8590a5",
+        color: Theme.light.text,
         marginBottom: 15,
         textAlign: "center",
+        $dark: {
+            color: Theme.dark.text
+        }
     },
     cuenta: {
-        color: "#15b79f",
+        color: Theme.light.text,
         marginBottom: 15,
         textAlign: "center",
+        $dark: {
+            color: Theme.dark.text
+        }
     },
     logo: {
         width: 150,

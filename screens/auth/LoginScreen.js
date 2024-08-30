@@ -10,6 +10,8 @@ import { loginFailure, loginSuccess } from "../../redux/slice/loginSlice";
 import Errors from "../../components/Errors";
 import Loader from "../../components/Loader";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Theme } from "../../theme/Theme";
+import { useColorScheme } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -17,6 +19,9 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const colorScheme = useColorScheme();
+  const logoSource = colorScheme === 'dark' ? require('../../assets/logo-oscuro.png') : require('../../assets/logo-claro.png');
 
   const handleLogin = async () => {
     setLoading(true);
@@ -65,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.container}>
         <Image
-          source={require("../../assets/logo-claro.png")}
+          source={logoSource}
           style={styles.logo}
         />
         <Text style={styles.title}>¡Bienvenido a Mrs. Paquetes! </Text>
@@ -86,17 +91,17 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
         />
         <Text onPress={handleRecoverPassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" />{"¿Olvidaste tu contraseña?"}
+          <Icon name="lock" size={16} color="#8590a5" /> {"¿Olvidaste tu contraseña?"}
         </Text>
         <Text onPress={handleUpdatePassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" />{"tengo un codigo"}
+          <Icon name="lock" size={16} color="#8590a5" /> {"tengo un codigo"}
         </Text>
         <Button
           title="Iniciar sesión"
           onPress={handleLogin}
           typeButton="primary"
         />
-        <Text>¿No tienes cuenta? </Text>
+        <Text style={styles.cuenta}>¿No tienes cuenta? </Text>
         <Text onPress={handleRegister} style={styles.cuenta}>
           Registrate{" "}
         </Text>
@@ -113,27 +118,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     margin: 15,
-    marginTop: 150,
-    marginBottom: 150,
-    backgroundColor: "#FFFFFF",
+    marginTop: 50,
+    marginBottom: 40,
+    backgroundColor: Theme.light.surface,
     borderRadius: 15,
+    $dark: {
+      backgroundColor: Theme.dark.primary
+    }
   },
   title: {
-    color: "#15b79f",
+    color: Theme.light.text,
     marginBottom: 20,
     fontSize: 15,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    $dark: {
+      color: Theme.dark.text
+    }
   },
   contra: {
-    color: "#8590a5",
+    color: Theme.light.text,
     marginBottom: 15,
     textAlign: "center",
+    $dark: {
+      color: Theme.dark.text
+    }
   },
   cuenta: {
-    color: "#15b79f",
+    color: Theme.light.text,
     marginBottom: 15,
     textAlign: "center",
+    $dark: {
+      color: Theme.dark.text
+    }
   },
   logo: {
     width: 150,

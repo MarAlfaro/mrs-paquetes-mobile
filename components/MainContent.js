@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { Theme } from '../theme/Theme';
 
 const MainContent = ({ children }) => {
     return (
@@ -17,8 +18,11 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#635bff',
+        backgroundColor: Theme.light.primary,
         padding: 10,
+        $dark: {
+            backgroundColor: Theme.dark.primaryDark,
+        }
     },
 });
 

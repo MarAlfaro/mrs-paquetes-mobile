@@ -30,6 +30,17 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1, // Opacidad de la sombra en iOS
         shadowRadius: 3, // Radio de la sombra en iOS
         shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra en iOS
+        $dark: {
+            backgroundColor: '#1E1E1E', // Fondo para modo oscuro
+            color: '#EAEAEA', // Color del texto para modo oscuro
+            borderColor: '#333333', // Color del borde para modo oscuro
+            borderWidth: 1, // Ancho del borde para modo oscuro
+            elevation: 2, // Sombra en Android
+            shadowColor: '#000000', // Color de la sombra en iOS
+            shadowOpacity: 0.5, // Opacidad de la sombra en iOS (más alta para modo oscuro)
+            shadowRadius: 6, // Radio de la sombra en iOS (más grande para modo oscuro)
+            shadowOffset: { width: 0, height: 4 }, // Desplazamiento de la sombra en iOS (más pronunciado)
+        }
     },
 });
 
