@@ -12,6 +12,7 @@ import { logout } from "../../redux/slice/loginSlice";
 import Errors from '../../components/Errors';
 import Loader from '../../components/Loader';
 import { CommonActions } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 const ProfileScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -31,6 +32,12 @@ const ProfileScreen = ({ navigation }) => {
             );
 
             if (response.hasOwnProperty('success')) {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Proceso completado',
+                    text2: `Su perfil fue creado exitosamente!!`
+                });
+
                 navigation.dispatch(
                     CommonActions.reset({
                         index: 0,

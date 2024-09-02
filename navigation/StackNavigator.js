@@ -7,6 +7,7 @@ import RecoverPasswordScreen from "../screens/RecoverPasswordScreen";
 import UpdatePasswordScreen from "../screens/UpdatePasswordScreen";
 import RegisterScreen from "../screens/singup/RegisterScreen";
 import ConfirmationEmailScreen from "../screens/singup/ConfirmationEmailScreen";
+import CreateProfileScreen from "../screens/auth/CreateProfileScreen";
 
 
 const Stack = createStackNavigator();
@@ -29,6 +30,7 @@ const MainStackNavigator = () => {
             <Stack.Screen name="UpdatePasswordScreen" component={UpdatePasswordScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="ConfirmationEmailScreen" component={ConfirmationEmailScreen} />
+            <Stack.Screen name="CreateProfileScreen" component={CreateProfileScreen} />
         </Stack.Navigator>
     );
 }

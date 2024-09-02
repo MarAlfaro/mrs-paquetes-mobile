@@ -11,6 +11,7 @@ import RecoverPasswordScreen from "../screens/RecoverPasswordScreen"; // Importa
 import UpdatePasswordScreen from "../screens/UpdatePasswordScreen"; 
 import Icon from "react-native-vector-icons/FontAwesome"; // o cualquier otra librería de iconos que prefieras
 import CustomDrawerContent from "./CustomDrawerContent";
+import { Theme } from "../theme/Theme";
 
 const Drawer = createDrawerNavigator();
 
@@ -23,52 +24,12 @@ const drawerIcons = {
 
 const DrawerNavigator = () => {
   const user = useSelector((state) => state.login.user);
+  const hasProfile = useSelector(state => state.profile.hasProfile);
   const role = user.role || "default";
 
   const getDrawerScreens = () => {
-    switch (role) {
-      case 'admin':
-        return (
-          <>
-            <Drawer.Screen
-              name="Mrs Paquetes"
-              component={TabNavigator}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.MrsPaquetes} color={color} size={size} />
-                ),
-              }}
-            />
-            <Drawer.Screen
-              name="Perfil"
-              component={ProfileScreen}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.Profile} color={color} size={size} />
-                ),
-              }}
-            />
-            <Drawer.Screen
-              name="Mis Paquetes"
-              component={MisPaquetesScreen}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.MisPaquetes} color={color} size={size} />
-                ),
-              }}
-            />
-            <Drawer.Screen
-              name="Seguimiento"
-              component={SeguimientoScreen}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.Seguimiento} color={color} size={size} />
-                ),
-              }}
-            />
-          </>
-        );
-      case 'cliente':
+
+      if (hasProfile) {
         return (
           <>
           <Drawer.Screen
@@ -100,42 +61,19 @@ const DrawerNavigator = () => {
             />
           </>
         );
-      case 'conductor':
-        return (
-          <>
-          <Drawer.Screen
-              name="Mrs Paquetes"
-              component={TabNavigator}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.MrsPaquetes} color={color} size={size} />
-                ),
-              }}
-            />
-            <Drawer.Screen
-              name="Seguimiento"
-              component={SeguimientoScreen}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.Seguimiento} color={color} size={size} />
-                ),
-              }}
-            />
-          </>
-        );
-      default:
-        return (
-          <Drawer.Screen
-              name="Mrs Paquetes"
-              component={TabNavigator}
-              options={{
-                drawerIcon: ({ color, size }) => (
-                  <Icon name={drawerIcons.MrsPaquetes} color={color} size={size} />
-                ),
-              }}
-            />
-        );
-    }
+      } 
+     
+      return (
+        <Drawer.Screen
+            name="Mrs Paquetes"
+            component={TabNavigator}
+            options={{
+              drawerIcon: ({color, size }) => (
+                <Icon name={drawerIcons.MrsPaquetes} color={color} size={size} />
+              ),
+            }}
+          />
+      );
   };
 
   return (
@@ -143,14 +81,14 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#212734",
+          backgroundColor: Theme.dark.primaryDark,
         },
         headerTintColor: "#FFFFFF",
         drawerStyle: {
-          backgroundColor: "#212734",
+          backgroundColor:  Theme.dark.primary,
         },
         drawerContentStyle: {
-          backgroundColor: "#212734",
+          backgroundColor:  Theme.dark.primaryDark,
         },
         drawerActiveTintColor: "#635bff",
         drawerInactiveTintColor: "#FFFFFF",
@@ -170,8 +108,8 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="UpdatePassword"
-        component={UpdatePasswordScreen} // Usa el componente correcto aquí
-        options={{ drawerLabel: () => null }} // Oculta la pantalla del menú de navegación
+        component={UpdatePasswordScreen}
+        options={{ drawerLabel: () => null }}
       />
     </Drawer.Navigator>
   );

@@ -1,9 +1,21 @@
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput as RNTextInput, StyleSheet, View, Platform } from 'react-native';
+import { TextInputMask as MaskedTextInput } from 'react-native-masked-text';
 
-const Input = ({ value, onChangeText, placeholder, keyboardType, autoCapitalize, secureTextEntry }) => {
+const InputMask = ({
+    value,
+    onChangeText,
+    placeholder,
+    keyboardType = 'default',
+    autoCapitalize = 'none',
+    secureTextEntry = false,
+    mask,
+    ...props
+}) => {
     return (
-        <TextInput
+        <MaskedTextInput
+            type={'custom'}
+            options={{ mask }}
             style={styles.input}
             value={value}
             onChangeText={onChangeText}
@@ -13,6 +25,7 @@ const Input = ({ value, onChangeText, placeholder, keyboardType, autoCapitalize,
             secureTextEntry={secureTextEntry}
             placeholderTextColor="#757575"
             underlineColorAndroid="transparent"
+            {...props}
         />
     );
 };
@@ -30,6 +43,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         shadowOffset: { width: 0, height: 2 },
+        ...(Platform.OS === 'android' ? {} : {
+            borderColor: '#E0E0E0',
+            borderWidth: 1,
+        }),
         $dark: {
             backgroundColor: '#1E1E1E',
             color: '#EAEAEA',
@@ -44,4 +61,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Input;
+export default InputMask;

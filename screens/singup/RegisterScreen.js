@@ -11,6 +11,7 @@ import { registerFailure, registerSuccess } from '../../redux/slice/registerSlic
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { Theme } from '../../theme/Theme';
+import Toast from 'react-native-toast-message';
 
 
 const RegisterScreen = () => {
@@ -49,6 +50,13 @@ const RegisterScreen = () => {
       });
 
       if (response.message) {
+
+        Toast.show({
+          type: 'success',
+          text1: 'Proceso completado',
+          text2: `Su usuario fue creado correctamente!!`
+        });
+
         dispatch(registerSuccess(
           {
             email: email,
@@ -80,8 +88,8 @@ const RegisterScreen = () => {
         style={styles.logo}
       />
       <Text style={styles.title}>¿Eres nuevo?, !Crea una cuenta! </Text>
+      
       <Input
-        style={styles.input}
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
         value={email}
@@ -90,7 +98,6 @@ const RegisterScreen = () => {
       />
 
       <Input
-        style={styles.input}
         placeholder="Contraseña"
         onChangeText={(text) => setPassword(text)}
         value={password}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, useColorScheme } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,12 +8,16 @@ import { fetchData } from '../api/client';
 import { logout } from '../redux/slice/loginSlice';
 import Loader from '../components/Loader';
 import Errors from '../components/Errors';
+import { Theme } from '../theme/Theme';
 
 const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.login.user);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState(null);
+
+  const colorScheme = useColorScheme();
+  const logoSource = colorScheme === 'dark' ? require('../assets/logo-claro.png') : require('../assets/logo-claro.png');
 
   const handleLogout = async () => {
     setLoading(true);
@@ -50,7 +54,7 @@ const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
-        <Image source={require('../assets/Artboard.png')} style={styles.logo} />
+        <Image source={logoSource} style={styles.logo} />
       </View>
       <DrawerItemList {...props} />
       {loading && <Loader />}
@@ -65,7 +69,6 @@ const CustomDrawerContent = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#212734',
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',

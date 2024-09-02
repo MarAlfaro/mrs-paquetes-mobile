@@ -1,29 +1,33 @@
-import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { TextInput, StyleSheet, View } from 'react-native';
 
-const Input = ({ value, onChangeText, placeholder, keyboardType, autoCapitalize, secureTextEntry }) => {
+const TextArea = ({ value, onChangeText, placeholder }) => {
     return (
         <TextInput
-            style={styles.input}
-            value={value}
+            style={styles.textArea}
+            multiline
+            numberOfLines={4}
             onChangeText={onChangeText}
+            value={value}
             placeholder={placeholder}
-            keyboardType={keyboardType}
-            autoCapitalize={autoCapitalize}
-            secureTextEntry={secureTextEntry}
-            placeholderTextColor="#757575"
-            underlineColorAndroid="transparent"
+            placeholderTextColor="#6c757d"
+            textAlignVertical="top"
         />
     );
 };
 
 const styles = StyleSheet.create({
-    input: {
-        height: 56,
+    textArea: {
+        height: 100,
         width: '100%',
         backgroundColor: '#FFFFFF',
         borderRadius: 4,
+        borderColor: '#ced4da',
+        borderWidth: 1,
         paddingHorizontal: 16,
+        paddingVertical: 10,
+        fontSize: 16,
+        color: '#212529',
         marginBottom: 16,
         elevation: 2,
         shadowColor: '#000000',
@@ -44,4 +48,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Input;
+export default TextArea;

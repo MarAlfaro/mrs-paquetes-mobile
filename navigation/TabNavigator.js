@@ -4,6 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from "../screens/HomeScreen";
 import AboutScreen from "../screens/AboutScreen";
 import ContactScreen from "../screens/ContactScreen";
+import { Theme } from "../theme/Theme";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -14,7 +15,7 @@ const BottomTabNavigator = () => {
       activeColor="#635bff"
       inactiveColor="#FFFFFF"
       barStyle={{ 
-        backgroundColor: '#212734' 
+        backgroundColor: Theme.dark.primaryDark 
       }}
       screenOptions={{
         headerShown: false,

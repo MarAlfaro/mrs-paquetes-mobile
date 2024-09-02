@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
 import { Theme } from '../../theme/Theme';
+import Toast from 'react-native-toast-message';
 
 
 const ConfirmationEmailScreen = () => {
@@ -34,12 +35,14 @@ const ConfirmationEmailScreen = () => {
             });
 
             if (response.success) {
-                Alert.alert("Éxito", "El correo ha sido verificado correctamente.", [
-                    {
-                        text: "OK",
-                        onPress: () => navigation.navigate("Login"),
-                    },
-                ]);
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'Proceso completado',
+                    text2: `El correo ha sido verificado correctamente!!`
+                });
+
+                navigation.replace("Login");
             } else if (response.error) {
             setErrors(response.error);
             }
@@ -60,11 +63,11 @@ const ConfirmationEmailScreen = () => {
             });
 
             if (response.success) {
-                Alert.alert("Mensaje", "Se ha vuelto enviar otro codigo de verficación revisa tu correo", [
-                    {
-                        text: "OK"
-                    },
-                ]);
+                Toast.show({
+                    type: 'success',
+                    text1: 'Proceso completado',
+                    text2: `Se ha vuelto enviar otro codigo de verficación revisa tu correo!!`
+                });
             } else if (response.error) {
             setErrors(response.error);
             }
@@ -92,7 +95,6 @@ const ConfirmationEmailScreen = () => {
                 <Text style={styles.title}>Ingresa el codigo de verificacion!</Text>
                 
                 <Input
-                    style={styles.input}
                     placeholder="Codigo de confirmación"
                     onChangeText={(text) => setOtp(text)}
                     value={otp}

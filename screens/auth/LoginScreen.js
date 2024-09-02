@@ -12,6 +12,7 @@ import Loader from "../../components/Loader";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Theme } from "../../theme/Theme";
 import { useColorScheme } from "react-native";
+import Toast from "react-native-toast-message";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -37,6 +38,13 @@ const LoginScreen = ({ navigation }) => {
           role: response.role,
           token: response.token,
         }));
+
+        Toast.show({
+          type: 'success',
+          text1: 'Hola',
+          text2: `Bienvenido, te hemos hechado de menos 👋`
+        });
+
         navigation.navigate("Dashboard");
       } else if (response.error) {
         setErrors(response.error);
@@ -74,8 +82,8 @@ const LoginScreen = ({ navigation }) => {
           style={styles.logo}
         />
         <Text style={styles.title}>¡Bienvenido a Mrs. Paquetes! </Text>
+        
         <Input
-          style={styles.input}
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
           value={email}
@@ -84,7 +92,6 @@ const LoginScreen = ({ navigation }) => {
         />
 
         <Input
-          style={styles.input}
           placeholder="Contraseña"
           onChangeText={(text) => setPassword(text)}
           value={password}
