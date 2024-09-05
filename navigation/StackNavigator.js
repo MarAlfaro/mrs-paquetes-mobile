@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/auth/LoginScreen";
 import DrawerNavigator from "./DrawerNavigator";
-import RecoverPasswordScreen from "../screens/RecoverPasswordScreen";
-import UpdatePasswordScreen from "../screens/UpdatePasswordScreen";
 import RegisterScreen from "../screens/singup/RegisterScreen";
 import ConfirmationEmailScreen from "../screens/singup/ConfirmationEmailScreen";
 import CreateProfileScreen from "../screens/auth/CreateProfileScreen";
+import UpdatePasswordScreen from "../screens/singin/UpdatePasswordScreen";
+import RecoverPasswordScreen from "../screens/singin/RecoverPasswordScreen";
 
 
 const Stack = createStackNavigator();

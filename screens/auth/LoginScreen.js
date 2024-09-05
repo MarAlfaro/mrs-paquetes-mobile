@@ -101,7 +101,7 @@ const LoginScreen = ({ navigation }) => {
           <Icon name="lock" size={16} color="#8590a5" /> {"¿Olvidaste tu contraseña?"}
         </Text>
         <Text onPress={handleUpdatePassword} style={styles.contra}>
-          <Icon name="lock" size={16} color="#8590a5" /> {"tengo un codigo"}
+          <Icon name="lock" size={16} color="#8590a5" /> {"Tengo un codigo"}
         </Text>
         <Button
           title="Iniciar sesión"

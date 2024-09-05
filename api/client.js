@@ -47,9 +47,9 @@ const postData = async (endpoint, data, headers = {}) => {
     }
 };
 
-const putData = async (endpoint, id, data, headers = {}) => {
+const putData = async (endpoint, data, headers = {}) => {
     try {
-        const response = await axios.put(`${API_URL_BASE}/${endpoint}/${id}`, data, {
+        const response = await axios.put(`${API_URL_BASE}/${endpoint}`, data, {
             headers: {
                 ...headers,
                 'Content-Type': 'application/json',

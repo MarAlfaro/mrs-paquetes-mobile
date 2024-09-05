@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const Dropdown = ({ items, placeholder, searchPlaceholder, onValueChange }) => {
+const Dropdown = ({ items, placeholder, searchPlaceholder, onValueChange, defaultValue }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(defaultValue || null);
+
+  useEffect(() => {
+    // Actualiza el valor si el valor predeterminado cambia
+    if (defaultValue !== value) {
+      setValue(defaultValue);
+    }
+  }, [defaultValue]);
 
   const handleValueChange = (newValue) => {
     setValue(newValue);
@@ -14,7 +21,7 @@ const Dropdown = ({ items, placeholder, searchPlaceholder, onValueChange }) => {
   };
 
   return (
-    <View style={{ width:'100%', zIndex: open ? 1000 : 1 }}>
+    <View style={{ width: '100%', zIndex: open ? 1000 : 1 }}>
       <DropDownPicker
         open={open}
         value={value}
@@ -119,14 +126,6 @@ const styles = StyleSheet.create({
   arrowIcon: {
     width: 20,
     height: 20,
-    $dark: {
-      color: '#FFFFFF',
-    }
-  },
-  selectedItem: {
-    marginTop: 20,
-    fontSize: 16,
-    color: '#495057',
     $dark: {
       color: '#FFFFFF',
     }

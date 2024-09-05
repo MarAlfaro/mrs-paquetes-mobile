@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, useColorScheme } from "react-native";
-import { useDispatch } from "react-redux";
-import { postData } from "../../api/client";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import MainContent from "../../components/MainContent";
-import Errors from "../../components/Errors";
-import Loader from "../../components/Loader";
-import { registerFailure, registerSuccess } from '../../redux/slice/registerSlice';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, useColorScheme } from 'react-native';
+import { postData } from '../../api/client';
+import MainContent from '../../components/MainContent';
 import { Theme } from '../../theme/Theme';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { Image } from 'react-native-animatable';
+import Loader from '../../components/Loader';
+import Errors from '../../components/Errors';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { recoverReset } from '../../redux/slice/recoverSlice';
 
-
-const RegisterScreen = () => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const UpdatePasswordScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const user = useSelector(state => state.recover.user);
+
+  useEffect(() => {
+    setEmail(user?.email);
+  }, [user]);
 
   const colorScheme = useColorScheme();
   const logoSource = colorScheme === 'dark' ? require('../../assets/logo-oscuro.png') : require('../../assets/logo-claro.png');
@@ -36,7 +40,7 @@ const RegisterScreen = () => {
     return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
   };
 
-  const handleRegister = async () => {
+  const handleUpdatePassword = async () => {
     if (!isPasswordSecure(password)) {
       setErrors("La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.");
       return;
@@ -49,29 +53,26 @@ const RegisterScreen = () => {
 
     setLoading(true);
     try {
-      const response = await postData("register", {
-        email: email,
-        password: password,
+      await postData('password/reset', {
+        email,
+        otp,
+        password,
       });
 
-      if (response.message) {
-        Toast.show({
-          type: 'success',
-          text1: 'Proceso completado',
-          text2: 'Su usuario fue creado correctamente!!',
-        });
+      Toast.show({
+        type: 'success',
+        text1: 'Éxito',
+        text2: `Contraseña restablecida con éxito. 😎`
+      });
 
-        dispatch(
-          registerSuccess({
-            email: email,
-          })
-        );
-        navigation.navigate("ConfirmationEmailScreen");
-      } else if (response.error) {
-        setErrors(response.error);
-      }
+      dispatch(recoverReset());
+      navigation.navigate('Login'); // Navegar a la pantalla de inicio de sesión
     } catch (error) {
-      dispatch(registerFailure(error.message));
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: `No se pudo restablecer la contraseña. Intenta nuevamente. 😥`
+      });
       setErrors(error);
     } finally {
       setLoading(false);
@@ -85,10 +86,12 @@ const RegisterScreen = () => {
   return (
     <MainContent>
       {loading && <Loader />}
-
       <View style={styles.container}>
-        <Image source={logoSource} style={styles.logo} />
-        <Text style={styles.title}>¿Eres nuevo?, ¡Crea una cuenta! </Text>
+
+        <Image
+          source={logoSource}
+          style={styles.logo}
+        />
 
         <Input
           placeholder="Email"
@@ -99,7 +102,15 @@ const RegisterScreen = () => {
         />
 
         <Input
-          placeholder="Contraseña"
+          placeholder="Código"
+          onChangeText={(text) => setOtp(text)}
+          value={otp}
+          keyboardType="numeric"
+          autoCapitalize="none"
+        />
+
+        <Input
+          placeholder="Nueva contraseña"
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry
@@ -113,8 +124,8 @@ const RegisterScreen = () => {
         />
 
         <Button
-          title="Crear Cuenta"
-          onPress={handleRegister}
+          title="Restablecer Contraseña"
+          onPress={handleUpdatePassword}
           typeButton="primary"
         />
 
@@ -131,13 +142,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     margin: 15,
-    marginTop: 150,
-    marginBottom: 150,
+    marginTop: 50,
+    marginBottom: 40,
     backgroundColor: Theme.light.surface,
     borderRadius: 15,
     $dark: {
-      backgroundColor: Theme.dark.primary,
-    },
+      backgroundColor: Theme.dark.primary
+    }
   },
   title: {
     color: Theme.light.text,
@@ -146,8 +157,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     $dark: {
-      color: Theme.dark.text,
-    },
+      color: Theme.dark.text
+    }
   },
   logo: {
     width: 150,
@@ -156,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default UpdatePasswordScreen;

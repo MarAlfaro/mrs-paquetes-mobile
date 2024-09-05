@@ -34,9 +34,13 @@ const HomeScreen = ({ navigation }) => {
         }))
 
         console.log(hasProfile)
-        
+
       } catch (error) {
-        Alert.alert("Error", "Hubo un problema al cargar los datos de los paquetes.");
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: `Formato al verficar el perfil.!!`
+        });
       }
     };
     getProfileStatus();
@@ -52,19 +56,19 @@ const HomeScreen = ({ navigation }) => {
 
         {hasProfile ? (
 
-           <>
-              <Text style={styles.welcomeMessage}>{welcomeMessage}</Text>
-              
-              <DetailsCard
-                title="Paquetes"
-                description="Detalles de tus paquetes"
-                iconName="envelope"
-                typeCard="info"
-                statusText={`${0} Paquetes`}
-                onPress={() => {
-                  console.log("Paquetes clickeados");
-                }}
-              />
+          <>
+            <Text style={styles.welcomeMessage}>{welcomeMessage}</Text>
+
+            <DetailsCard
+              title="Paquetes"
+              description="Detalles de tus paquetes"
+              iconName="envelope"
+              typeCard="info"
+              statusText={`${0} Paquetes`}
+              onPress={() => {
+                console.log("Paquetes clickeados");
+              }}
+            />
 
             <DetailsCard
               title="Número de entregas"
@@ -108,18 +112,18 @@ const HomeScreen = ({ navigation }) => {
               typeCard="danger"
               statusText="10"
             />
-           </>
-  
+          </>
+
         ) : (
           <>
-          <View style={styles.continerNotProfile}>
-            <Text style={styles.title}>Para seguir usando a Mr. Paquetes! crea tu perfil </Text>      
-            <Button
-              title="Crear Perfil"
-              onPress={handleProfile}
-              typeButton="primary"
-            />
-          </View>
+            <View style={styles.continerNotProfile}>
+              <Text style={styles.title}>Para seguir usando a Mr. Paquetes! crea tu perfil </Text>
+              <Button
+                title="Crear Perfil"
+                onPress={handleProfile}
+                typeButton="primary"
+              />
+            </View>
           </>
         )}
 

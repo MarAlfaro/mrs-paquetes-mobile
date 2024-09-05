@@ -5,11 +5,8 @@ import { useSelector } from "react-redux";
 import MisPaquetesScreen from "../screens/MisPaquetesScreen";
 
 import ProfileScreen from "../screens/auth/ProfileScreen";
-import SeguimientoScreen from "../screens/SeguimientoScreen";
 import TabNavigator from "./TabNavigator";
-import RecoverPasswordScreen from "../screens/RecoverPasswordScreen"; // Importa el componente correcto
-import UpdatePasswordScreen from "../screens/UpdatePasswordScreen"; 
-import Icon from "react-native-vector-icons/FontAwesome"; // o cualquier otra librería de iconos que prefieras
+import Icon from "react-native-vector-icons/FontAwesome";
 import CustomDrawerContent from "./CustomDrawerContent";
 import { Theme } from "../theme/Theme";
 
@@ -96,21 +93,6 @@ const DrawerNavigator = () => {
       }}
     >
       {getDrawerScreens()}
-      <Drawer.Screen
-        name="RecoverPassword"
-        component={RecoverPasswordScreen}
-        options={{
-          drawerLabel: "Cambiar Contraseña",
-          drawerIcon: ({ color, size }) => (
-            <Icon name="key" color={color} size={size} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="UpdatePassword"
-        component={UpdatePasswordScreen}
-        options={{ drawerLabel: () => null }}
-      />
     </Drawer.Navigator>
   );
 };

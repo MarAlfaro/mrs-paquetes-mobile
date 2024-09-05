@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, Alert, useColorScheme } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Image, useColorScheme } from "react-native";
 import { useDispatch } from "react-redux";
 import { postData } from "../../api/client";
 import Button from "../../components/Button";
@@ -18,19 +18,24 @@ import Toast from 'react-native-toast-message';
 const ConfirmationEmailScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const[email, setEmail] = useState(null);
     const [otp, setOtp] = useState("");
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.register.user);
 
+    useEffect(() => {
+        setEmail(user.email);
+    }, [user]);
+
     const colorScheme = useColorScheme();
     const logoSource = colorScheme === 'dark' ? require('../../assets/logo-oscuro.png') : require('../../assets/logo-claro.png');
 
-    const handleConfirmation = async() => {
+    const handleConfirmation = async () => {
         setLoading(true);
         try {
             const response = await postData("email-verification", {
-                email: user.email,
+                email: email,
                 otp: otp,
             });
 
@@ -44,7 +49,7 @@ const ConfirmationEmailScreen = () => {
 
                 navigation.replace("Login");
             } else if (response.error) {
-            setErrors(response.error);
+                setErrors(response.error);
             }
         } catch (error) {
             dispatch(registerFailure(error.message));
@@ -55,7 +60,7 @@ const ConfirmationEmailScreen = () => {
     };
 
 
-    const handleResendCode = async() => {
+    const handleResendCode = async () => {
         setLoading(true);
         try {
             const response = await postData("send-email-verification", {
@@ -69,7 +74,7 @@ const ConfirmationEmailScreen = () => {
                     text2: `Se ha vuelto enviar otro codigo de verficación revisa tu correo!!`
                 });
             } else if (response.error) {
-            setErrors(response.error);
+                setErrors(response.error);
             }
         } catch (error) {
             dispatch(registerFailure(error.message));
@@ -93,7 +98,15 @@ const ConfirmationEmailScreen = () => {
                     style={styles.logo}
                 />
                 <Text style={styles.title}>Ingresa el codigo de verificacion!</Text>
-                
+
+                <Input
+                    placeholder="Email"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                />
+
                 <Input
                     placeholder="Codigo de confirmación"
                     onChangeText={(text) => setOtp(text)}
@@ -102,7 +115,7 @@ const ConfirmationEmailScreen = () => {
                 />
 
                 <Button
-                    title="Verficar correo"
+                    title="Verificar correo"
                     onPress={handleConfirmation}
                     typeButton="primary"
                 />
