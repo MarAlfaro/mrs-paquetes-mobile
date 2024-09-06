@@ -13,15 +13,7 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.login.user);
   const hasProfile = useSelector(state => state.profile.hasProfile);
-  const userName = user.user.name || "Usuario";
-  const role = user.role || "default";
   const token = user.token;
-
-  const roleMessage = {
-    cliente: `Hola, ${userName}. Cliente puedes ver y gestionar tus paquetes.`,
-  };
-
-  const welcomeMessage = roleMessage[role];
 
   useEffect(() => {
     //Verficar si el profile esta creado
@@ -57,7 +49,11 @@ const HomeScreen = ({ navigation }) => {
         {hasProfile ? (
 
           <>
-            <Text style={styles.welcomeMessage}>{welcomeMessage}</Text>
+            <DetailsCard
+              title="Bienvenido"
+              description="Hola, aqui puedes ver y gestionar tus paquetes."
+              typeCard="success"
+            />
 
             <DetailsCard
               title="Paquetes"
@@ -138,7 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    padding: 10,
   },
   continerNotProfile: {
     flex: 1,

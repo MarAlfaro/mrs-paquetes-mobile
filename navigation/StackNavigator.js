@@ -8,6 +8,8 @@ import ConfirmationEmailScreen from "../screens/singup/ConfirmationEmailScreen";
 import CreateProfileScreen from "../screens/auth/CreateProfileScreen";
 import UpdatePasswordScreen from "../screens/singin/UpdatePasswordScreen";
 import RecoverPasswordScreen from "../screens/singin/RecoverPasswordScreen";
+import AddAddressScreen from "../screens/address/AddAddressScreen";
+import EditAddressScreen from "../screens/address/EditAddressScreen";
 
 
 const Stack = createStackNavigator();
@@ -31,6 +33,8 @@ const MainStackNavigator = () => {
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="ConfirmationEmailScreen" component={ConfirmationEmailScreen} />
             <Stack.Screen name="CreateProfileScreen" component={CreateProfileScreen} />
+            <Stack.Screen name="AddAddressScreen" component={AddAddressScreen} /> 
+            <Stack.Screen name="EditAddressScreen" component={EditAddressScreen} /> 
         </Stack.Navigator>
     );
 }

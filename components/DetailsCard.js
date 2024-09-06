@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'; // Importa TouchableOpacity
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
 
-const DetailsCard = ({ title, description, iconName, typeCard, statusText, onPress }) => { // Agrega onPress como una prop
+const DetailsCard = ({ title, description, iconName, typeCard, statusText, onPress }) => {
     const cardColors = {
         default: 'transparent',
         primary: '#04aad6',
@@ -25,7 +25,16 @@ const DetailsCard = ({ title, description, iconName, typeCard, statusText, onPre
                 <Icon name={iconName} size={24} color="#000" style={styles.icon} />
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.description}>{description}</Text>
+                    {Array.isArray(description) ? (
+                        description.map((item, index) => (
+                            <Text key={index} style={styles.description}>
+                                <Text style={styles.descriptionKey}>{item.key}: </Text>
+                                {item.value}
+                            </Text>
+                        ))
+                    ) : (
+                        <Text style={styles.description}>{description}</Text>
+                    )}
                 </View>
                 {statusText && (
                     <View style={[styles.statusTextContainer, { backgroundColor: borderColor }]}>
@@ -84,6 +93,9 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 16,
+    },
+    descriptionKey: {
+        fontWeight: 'bold',
     },
 });
 

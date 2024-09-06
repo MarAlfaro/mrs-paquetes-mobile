@@ -17,7 +17,7 @@ const CustomDrawerContent = (props) => {
   const [errors, setErrors] = React.useState(null);
 
   const colorScheme = useColorScheme();
-  const logoSource = colorScheme === 'dark' ? require('../assets/logo-claro.png') : require('../assets/logo-claro.png');
+  const logoSource = colorScheme === 'dark' ? require('../assets/logo-oscuro.png') : require('../assets/logo-oscuro.png');
 
   const handleLogout = async () => {
     setLoading(true);

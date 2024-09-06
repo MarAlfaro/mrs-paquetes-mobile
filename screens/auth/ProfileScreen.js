@@ -260,7 +260,7 @@ const ProfileScreen = ({ navigation }) => {
                     });
                 }
             } catch (error) {
-                console.error("Error fetching departamentos:", error);
+                console.error("Error fetching profile:", error);
                 Toast.show({
                     type: 'error',
                     text1: 'Error',

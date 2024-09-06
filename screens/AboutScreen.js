@@ -1,11 +1,13 @@
 import React from "react";
 import { Text, StyleSheet, ScrollView, Image } from "react-native";
 import MainContent from "../components/MainContent";
+import { Theme } from "../theme/Theme";
+import { View } from "react-native-animatable";
 
 const AboutScreen = () => {
   return (
-    <MainContent style={styles.main}>
-      <ScrollView contentContainerStyle={styles.container}>
+    <MainContent>
+      <View style={styles.container}>
         <Image source={require('../assets/paquetes.png')} style={styles.logo} />
         <Text style={styles.welcomeText}>¡Bienvenido a Mrs. Paquetes!</Text>
         <Text style={styles.description}>
@@ -18,22 +20,21 @@ const AboutScreen = () => {
         <Text style={styles.description}>
           Gracias por confiar en nosotros. Estamos aquí para ayudarte y asegurarnos de que tu experiencia sea excepcional.
         </Text>
-      </ScrollView>
+      </View>
     </MainContent>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 1,
+    margin: 10,
+    marginTop: 10,
     backgroundColor: '#FFFFFF',
-    
-  },
-  main: {
-    backgroundColor: '#FFFFFF'
+    borderRadius: 15,
   },
   logo: {
     width: 150,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#15b79f",
+    color: Theme.light.primary,
     textAlign: "center",
     marginBottom: 10,
   },

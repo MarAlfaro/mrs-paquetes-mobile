@@ -1,6 +1,6 @@
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from "../screens/HomeScreen";
 import AboutScreen from "../screens/AboutScreen";
 import ContactScreen from "../screens/ContactScreen";
@@ -12,7 +12,7 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Dashboard"
-      activeColor="#635bff"
+      activeColor={Theme.light.primaryDark }
       inactiveColor="#FFFFFF"
       barStyle={{ 
         backgroundColor: Theme.dark.primaryDark 
@@ -24,32 +24,35 @@ const BottomTabNavigator = () => {
       <Tab.Screen 
         name="Dashboard"
         component={HomeScreen}
-        options={
-          {
-            tabBarName: 'Dashboard',
-            tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="view-dashboard" color={color} size={20} />)
-          }
-        } />
+        options={{
+          tabBarLabel: 'Dashboard',
+          tabBarIcon: ({ color }) => (
+            <Icon name="view-dashboard" color={color} size={20} />
+          )
+        }} 
+      />
 
       <Tab.Screen 
         name="Contact" 
         component={ContactScreen}
-        options={
-          {
-            tabBarName: 'Contact',
-            tabBarIcon: ({color}) => (<MaterialCommunityIcons name="contacts" color={color} size={20} />)
-          }
-        } />
+        options={{
+          tabBarLabel: 'Contact',
+          tabBarIcon: ({ color }) => (
+            <Icon name="contacts" color={color} size={20} />
+          )
+        }} 
+      />
 
       <Tab.Screen 
         name="About" 
         component={AboutScreen}
-        options={
-          {
-            tabBarName: 'About',
-            tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="information-outline" color={color} size={20} />)
-          }
-        } />
+        options={{
+          tabBarLabel: 'About',
+          tabBarIcon: ({ color }) => (
+            <Icon name="information-outline" color={color} size={20} />
+          )
+        }} 
+      />
     </Tab.Navigator>
   );
 };

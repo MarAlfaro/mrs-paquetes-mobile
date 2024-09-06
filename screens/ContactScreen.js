@@ -1,39 +1,56 @@
 import React from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import MainContent from "../components/MainContent";
+import DetailsCard from "../components/DetailsCard";
 
 const ContactScreen = ({ navigation }) => {
+
+    const primerContacto = [
+        { key: 'Cargo', value: 'Gerente de ventas' },
+        { key: 'Teléfono', value: '+1234567890' },
+        { key: 'Correo', value: 'john.doe@example.com' }
+    ];
+
+    const segundoContacto = [
+        { key: 'Cargo', value: 'Gerente de Marketing' },
+        { key: 'Teléfono', value: '+0987654321' },
+        { key: 'Correo', value: 'jane.smith@example.com' }
+    ];
+
     return (
         <MainContent>
-            <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.title}>Contactos de la Empresa</Text>
-                <View style={styles.contact}>
-                    <Text style={styles.contactName}>Nombre: John Doe</Text>
-                    <Text style={styles.contactInfo}>Cargo: Gerente de Ventas</Text>
-                    <Text style={styles.contactInfo}>Teléfono: +1234567890</Text>
-                    <Text style={styles.contactInfo}>Correo: john.doe@example.com</Text>
-                </View>
-                <View style={styles.contact}>
-                    <Text style={styles.contactName}>Nombre: Jane Smith</Text>
-                    <Text style={styles.contactInfo}>Cargo: Gerente de Marketing</Text>
-                    <Text style={styles.contactInfo}>Teléfono: +0987654321</Text>
-                    <Text style={styles.contactInfo}>Correo: jane.smith@example.com</Text>
-                </View>
-                {/* Agrega más contactos según sea necesario */}
-            </ScrollView>
+            <DetailsCard
+                title="Contactos de la Empresa"
+                description="Puedes contactarno a traves de nuestro equipo de expertos."
+                typeCard="success"
+            />
+
+            <DetailsCard
+                title="John Doe"
+                description={primerContacto}
+                typeCard="primary"
+            />
+
+            <DetailsCard
+                title="Jane Smith"
+                description={segundoContacto}
+                typeCard="warning"
+            />
         </MainContent>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
-        justifyContent: "flex-start",
+        flex: 1,
+        justifyContent: "center",
         alignItems: "center",
-        padding: 20,
-        backgroundColor: '#e4e4e4'
+        padding: 10,
+        margin: 10,
+        marginTop: 10,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 15,
     },
-
     title: {
         fontSize: 24,
         fontWeight: "bold",

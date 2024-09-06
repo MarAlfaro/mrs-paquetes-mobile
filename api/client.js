@@ -91,9 +91,9 @@ const patchData = async (endpoint, id, data, headers = {}) => {
     }
 };
 
-const deleteData = async (endpoint, id, headers = {}) => {
+const deleteData = async (endpoint, headers = {}) => {
     try {
-        const response = await axios.delete(`${API_URL_BASE}/${endpoint}/${id}`, {
+        const response = await axios.delete(`${API_URL_BASE}/${endpoint}`, {
             headers: {
                 'Content-Type': 'application/json',
                 ...headers,
