@@ -25,7 +25,7 @@ const ConfirmationEmailScreen = () => {
     const user = useSelector(state => state.register.user);
 
     useEffect(() => {
-        setEmail(user.email);
+        setEmail(user?.email);
     }, [user]);
 
     const colorScheme = useColorScheme();
@@ -123,7 +123,7 @@ const ConfirmationEmailScreen = () => {
                 <Button
                     title="Volver a enviar código de verficación"
                     onPress={handleResendCode}
-                    typeButton="warning"
+                    typeButton="success"
                 />
                 {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
             </View>
@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        padding: 15,
-        margin: 15,
-        marginTop: 150,
-        marginBottom: 150,
+        padding: 10,
+        margin: 10,
+        marginTop: 10,
+        marginBottom: 10,
         backgroundColor: Theme.light.surface,
         borderRadius: 15,
         $dark: {
