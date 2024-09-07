@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     zIndex: 1000,
+    maxHeight: 250,
+    minHeight: 200,
     $dark: {
       backgroundColor: '#1E1E1E',
       color: '#EAEAEA',
