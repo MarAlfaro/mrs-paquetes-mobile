@@ -123,7 +123,7 @@ const RegisterScreen = () => {
         />
 
         <Button
-          title="Tengo cuenta pero no he verficado mi correo"
+          title="Tengo cuenta pero no he verificado mi correo"
           onPress={handleConfirmationEmail}
           typeButton="success"
         />
