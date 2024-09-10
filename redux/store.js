@@ -4,6 +4,7 @@ import registerReducer from "./slice/registerSlice";
 import profileReducer from "./slice/profileSlice";
 import recoverReducer from "./slice/recoverSlice";
 import addressReducer from "./slice/addressSlice";
+import orderDetailsReducer from "./slice/orderDetailsSlice";
 
 export default configureStore({
     reducer : {
@@ -11,6 +12,7 @@ export default configureStore({
         register: registerReducer,
         profile: profileReducer,
         recover: recoverReducer,
-        address: addressReducer
+        address: addressReducer,
+        orderDetails: orderDetailsReducer
     }
 });

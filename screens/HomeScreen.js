@@ -8,15 +8,16 @@ import { Theme } from "../theme/Theme";
 import { checkProfile } from "../redux/slice/profileSlice";
 import Button from "../components/Button";
 import Toast from "react-native-toast-message";
+import { orderDetailsSuccess } from "../redux/slice/orderDetailsSlice";
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [orders, setOrders] = useState([]);
   const user = useSelector(state => state.login.user);
   const hasProfile = useSelector(state => state.profile.hasProfile);
   const token = user.token;
 
   useEffect(() => {
-    //Verficar si el profile esta creado
     const getProfileStatus = async () => {
       try {
         const response = await fetchData("verificar-perfil", {}, { Authorization: `Bearer ${token}` });
@@ -38,8 +39,29 @@ const HomeScreen = ({ navigation }) => {
     getProfileStatus();
   }, [token]);
 
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const response = await fetchData("ordenes-cliente/ver-ordenes", {}, { Authorization: `Bearer ${token}` });
+        setOrders(response);
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: `Error al cargar las órdenes.`
+        });
+      }
+    };
+    getOrders();
+  }, [token]);
+
   const handleProfile = () => {
     navigation.navigate("CreateProfileScreen");
+  };
+
+  const handleOrder = (order) => {
+    dispatch(orderDetailsSuccess(order));
+    navigation.navigate("OrderDetailsScreen");
   };
 
   return (
@@ -51,63 +73,28 @@ const HomeScreen = ({ navigation }) => {
           <>
             <DetailsCard
               title="Bienvenido"
-              description="Hola, aqui puedes ver y gestionar tus paquetes."
+              description="Hola, aqui puedes ver y gestionar tus ordenes."
               typeCard="success"
             />
 
-            <DetailsCard
-              title="Paquetes"
-              description="Detalles de tus paquetes"
-              iconName="envelope"
-              typeCard="info"
-              statusText={`${0} Paquetes`}
-              onPress={() => {
-                console.log("Paquetes clickeados");
-              }}
-            />
-
-            <DetailsCard
-              title="Número de entregas"
-              description="Detalles del número de entregas"
-              iconName="info-circle"
-              typeCard="primary"
-              statusText="100"
-              onPress={() => {
-                console.log("La tarjeta fue clickeada");
-              }}
-            />
-
-            <DetailsCard
-              title="Entregas completadas"
-              description="Detalles de entregas completadas"
-              iconName="info-circle"
-              typeCard="success"
-              statusText="10"
-            />
-
-            <DetailsCard
-              title="Entregas pendientes"
-              description="Detalles de entregas pendientes"
-              iconName="info-circle"
-              typeCard="warning"
-              statusText="10"
-            />
-
-            <DetailsCard
-              title="Número de clientes"
-              description="Detalles de número de clientes"
-              iconName="info-circle"
-              typeCard="info"
-              statusText="10000"
-            />
-
-            <DetailsCard
-              title="Entregas retrasadas"
-              description="Detalle de entregas retrasadas"
-              iconName="info-circle"
-              typeCard="danger"
-              statusText="10"
-            />
+            {orders.length > 0 ? (
+              orders.map((order, index) => (
+                <DetailsCard
+                  key={index}
+                  title={`Orden ${order.numero_seguimiento}`}
+                  description={`Concepto: ${order.concepto}\nTotal a pagar: $${order.total_pagar}`}
+                  typeCard="primary"
+                  statusText={`Paquetes: ${order.detalles.length}`}
+                  onPress={() =>  handleOrder(order.detalles)}
+                />
+              ))
+            ) : (
+              <DetailsCard
+                  title="Información"
+                  description="No hay órdenes disponibles"
+                  typeCard="warning"
+              />
+            )}
           </>
 
         ) : (
@@ -154,16 +141,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 15,
     fontWeight: 'bold',
-    textAlign: 'center',
-    $dark: {
-      color: Theme.dark.text
-    }
-  },
-  welcomeMessage: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Theme.light.text,
-    marginBottom: 20,
     textAlign: 'center',
     $dark: {
       color: Theme.dark.text
