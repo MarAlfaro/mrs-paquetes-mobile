@@ -121,6 +121,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     marginBottom: 16,
+    $dark: {
+      backgroundColor: '#1E1E1E',
+      color: '#EAEAEA',
+      borderColor: '#333333',
+      borderWidth: 1, 
+      elevation: 2,
+      shadowColor: '#000000',
+      shadowOpacity: 0.5,
+      shadowRadius: 6,
+      shadowOffset: { width: 0, height: 4 },
+    }
   },
   text: {
     fontSize: 16,
@@ -129,6 +140,9 @@ const styles = StyleSheet.create({
   placeholder: {
     fontSize: 16,
     color: '#6c757d',
+    $dark: {
+      color: '#FFFFFF',
+    }
   },
   dropdownContainer: {
     backgroundColor: '#ffffff',
@@ -143,6 +157,17 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     maxHeight: 250,
     minHeight: 200,
+    $dark: {
+      backgroundColor: '#1E1E1E',
+      color: '#EAEAEA',
+      borderColor: '#333333',
+      borderWidth: 1,
+      elevation: 2,
+      shadowColor: '#000000',
+      shadowOpacity: 0.5,
+      shadowRadius: 6,
+      shadowOffset: { width: 0, height: 4 },
+    }
   },
   searchInput: {
     color: '#495057',
