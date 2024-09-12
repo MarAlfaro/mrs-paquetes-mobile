@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import MainContent from "../../components/MainContent";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
@@ -19,6 +19,9 @@ import Dropdown from "../../components/Dropdown";
 import Input from "../../components/Input";
 
 const ProfileScreen = ({ navigation }) => {
+    const colorScheme = useColorScheme();
+    const styles = colorScheme === 'dark' ? darkStyles : lightStyles;
+
     const dispatch = useDispatch();
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -383,242 +386,132 @@ const ProfileScreen = ({ navigation }) => {
 
     return (
         <MainContent>
-            <View style={styles.container}>
-                {loading && <Loader />}
-
-                {
-                    editing === false ? (
-
-                        profile.hasOwnProperty('cliente') && (
-                            <>
-                                <View style={styles.header}>
-
-                                    <View style={styles.profileImage}>
-                                        <Icon name="people" size={100} color="#4267B2" />
-                                    </View>
-
-                                    <Text style={styles.name}>{profile.cliente.nombre} {profile.cliente.apellido}</Text>
-                                    <Text style={styles.email}>{user.user.email}</Text>
-                                </View>
-                                <View style={styles.profileInfo}>
-                                    {renderInfoItem("event", "Fecha de creación", formatDate(user.user.created_at))}
-                                    {renderInfoItem("event", "Última modificación", formatDate(user.user.updated_at))}
-                                    {renderInfoItem("phone", "Teléfono", profile.cliente.telefono)}
-                                    {renderInfoItem("badge", "DUI", profile.cliente.dui)}
-                                    {renderInfoItem("business", "Nombre Comercial", profile.cliente.nombre_comercial ? profile.cliente.nombre_comercial : 'No disponible')}
-                                    {renderInfoItem("business", "Nombre de Empresa", profile.cliente.nombre_empresa ? profile.cliente.nombre_empresa : 'No disponible')}
-                                    {renderInfoItem("home", "Dirección", profile.cliente.direccion)}
-                                    {renderInfoItem("star", "Giro", profile.cliente.giro ? profile.cliente.giro : 'No disponible')}
-                                    {renderInfoItem("business", "NIT", profile.cliente.nit ? profile.cliente.nit : 'No disponible')}
-                                    {renderInfoItem("business", "NRC", profile.cliente.nrc ? profile.cliente.nrc : 'No disponible')}
-                                    {renderInfoItem("star", "Es Contribuyente", profile.cliente.es_contribuyente ? 'Sí' : 'No')}
-                                </View>
-                                <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
-                                    <Button
-                                        title="Editar perfil"
-                                        onPress={toggleEdit}
-                                        typeButton="primary"
-                                    />
-                                </Animatable.View>
-
-                                <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
-                                    <Button
-                                        title="Cerrar Sesión"
-                                        onPress={() => handleLogout()}
-                                        typeButton="danger"
-                                    />
-                                </Animatable.View>
-                            </>
-                        )
-
-                    ) : (
-                        <>
-
-                            <View style={styles.header}>
-                                <View style={styles.profileImage}>
-                                    <Icon name="people" size={100} color="#4267B2" />
-                                </View>
-                                <Text style={styles.name}>¡Actualizar perfil!</Text>
-                            </View>
-
-                            <Input
-                                placeholder="Nombres"
-                                onChangeText={(text) => setNombre(text)}
-                                value={nombre}
-                                keyboardType="text"
-                                autoCapitalize="none"
-                            />
-
-                            <Input
-                                placeholder="Apellidos"
-                                onChangeText={(text) => setApellido(text)}
-                                value={apellido}
-                                keyboardType="text"
-                                autoCapitalize="none"
-                            />
-
-                            <Input
-                                placeholder="Email"
-                                onChangeText={(text) => setEmail(text)}
-                                value={email}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                            />
-
-                            <InputMask
-                                value={telefono}
-                                onChangeText={setTelefono}
-                                placeholder="Teléfono"
-                                mask="9999-9999"
-                            />
-
-                            {tipoPersona.length > 0 && (
-                                <Dropdown
-                                    items={tipoPersona}
-                                    placeholder="Selecciona el tipo de persona"
-                                    searchPlaceholder="Buscar..."
-                                    onValueChange={handleTipoPersonaChange}
-                                    defaultValue={selectedTipoPersona}
-                                />
-                            )}
-
-                            {selectedTipoPersona === 2 ? (
-                                <>
-                                    <Input
-                                        placeholder="Nombre Empresa"
-                                        onChangeText={(text) => setNombreEmpresa(text)}
-                                        value={nombreEmpresa}
-                                        keyboardType="text"
-                                        autoCapitalize="none"
-                                    />
-
-                                    <Input
-                                        placeholder="Nombre Comercial"
-                                        onChangeText={(text) => setNombreComercial(text)}
-                                        value={nombreComercial}
-                                        keyboardType="text"
-                                        autoCapitalize="none"
-                                    />
-
-                                    {giros.length > 0 && (
-                                        <Dropdown
-                                            items={giros}
-                                            placeholder="Selecciona un giro"
-                                            searchPlaceholder="Buscar..."
-                                            onValueChange={handleGirosChange}
-                                            defaultValue={selectedGiro}
-                                        />
-                                    )}
-
-                                    <InputMask
-                                        value={nrc}
-                                        onChangeText={setNrc}
-                                        placeholder="NRC"
-                                        mask="999999-9"
-                                    />
-
-                                    <InputMask
-                                        value={nit}
-                                        onChangeText={setNit}
-                                        placeholder="NIT"
-                                        mask="9999-999999-999-9"
-                                    />
-
-                                    <CheckBox
-                                        title="Soy Contribuyente"
-                                        checked={isContribuyenteChecked}
-                                        onPress={() => setIsContribuyenteChecked(!isContribuyenteChecked)}
-                                        containerStyle={styles.checkbox}
-                                        textStyle={styles.label}
-                                    />
-
-                                </>
-                            ) : (
-                                <>
-                                    <InputMask
-                                        value={dui}
-                                        onChangeText={setDui}
-                                        placeholder="DUI"
-                                        mask="99999999-9"
-                                    />
-                                </>
-                            )}
-
-                            {departamentos.length > 0 && (
-                                <Dropdown
-                                    items={departamentos}
-                                    placeholder="Selecciona un departamento"
-                                    searchPlaceholder="Buscar..."
-                                    onValueChange={handleDepartamentoChange}
-                                    defaultValue={selectedDepartamento}
-                                />
-                            )}
-
-                            {municipios.length > 0 && (
-                                <>
-                                    <Dropdown
-                                        items={municipios}
-                                        placeholder="Selecciona un municipio"
-                                        searchPlaceholder="Buscar..."
-                                        onValueChange={handleMunicipioChange}
-                                        defaultValue={selectedMunicipio}
-                                    />
-
-                                    <TextArea
-                                        value={direccion}
-                                        onChangeText={(text) => setDireccion(text)}
-                                        placeholder="Ingresa la direccion"
-                                    />
-                                </>
-                            )}
-
-                            <Button
-                                title={isChangePassword ? 'Cancelar' : 'Cambiar contraseña'}
-                                onPress={handleChangePassword}
-                                typeButton={isChangePassword ? 'danger' : 'success'}
-                            />
-
-                            {isChangePassword && (
-                                <>
-                                    <Input
-                                        placeholder="Contraseña"
-                                        onChangeText={(text) => setPassword(text)}
-                                        value={password}
-                                        secureTextEntry
-                                    />
-
-                                    <Input
-                                        placeholder="Confirmar Contraseña"
-                                        onChangeText={(text) => setConfirmPassword(text)}
-                                        value={confirmPassword}
-                                        secureTextEntry
-                                    />
-                                </>
-                            )}
-
-                            <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
-                                <Button
-                                    title="Actualizar"
-                                    onPress={handleActualizarPerfil}
-                                    typeButton="primary"
-                                />
-                                <Button
-                                    title="Cancelar"
-                                    onPress={toggleEdit}
-                                    typeButton="danger"
-                                />
-                            </Animatable.View>
-                        </>
-                    )
-                }
-
-                {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
-            </View>
+          <View style={styles.container}>
+            {loading && <Loader />}
+    
+            {
+              editing === false ? (
+                profile.hasOwnProperty('cliente') && (
+                  <>
+                    <View style={styles.header}>
+                      <View style={styles.profileImage}>
+                        <Icon name="people" size={100} color="#4267B2" />
+                      </View>
+                      <Text style={styles.name}>{profile.cliente.nombre} {profile.cliente.apellido}</Text>
+                      <Text style={styles.email}>{user.user.email}</Text>
+                    </View>
+                    <View style={styles.profileInfo}>
+                      {renderInfoItem("event", "Fecha de creación", formatDate(user.user.created_at))}
+                      {renderInfoItem("event", "Última modificación", formatDate(user.user.updated_at))}
+                      {renderInfoItem("phone", "Teléfono", profile.cliente.telefono)}
+                      {renderInfoItem("badge", "DUI", profile.cliente.dui)}
+                      {renderInfoItem("business", "Nombre Comercial", profile.cliente.nombre_comercial ? profile.cliente.nombre_comercial : 'No disponible')}
+                      {renderInfoItem("business", "Nombre de Empresa", profile.cliente.nombre_empresa ? profile.cliente.nombre_empresa : 'No disponible')}
+                      {renderInfoItem("home", "Dirección", profile.cliente.direccion)}
+                      {renderInfoItem("star", "Giro", profile.cliente.giro ? profile.cliente.giro : 'No disponible')}
+                      {renderInfoItem("business", "NIT", profile.cliente.nit ? profile.cliente.nit : 'No disponible')}
+                      {renderInfoItem("business", "NRC", profile.cliente.nrc ? profile.cliente.nrc : 'No disponible')}
+                      {renderInfoItem("star", "Es Contribuyente", profile.cliente.es_contribuyente ? 'Sí' : 'No')}
+                    </View>
+                    <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
+                      <Button title="Editar perfil" onPress={toggleEdit} typeButton="primary" />
+                    </Animatable.View>
+                    <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
+                      <Button title="Cerrar Sesión" onPress={() => handleLogout()} typeButton="danger" />
+                    </Animatable.View>
+                  </>
+                )
+              ) : (
+                <>
+                  <View style={styles.header}>
+                    <View style={styles.profileImage}>
+                      <Icon name="people" size={100} color="#4267B2" />
+                    </View>
+                    <Text style={styles.name}>¡Actualizar perfil!</Text>
+                  </View>
+                  <Input placeholder="Nombres" onChangeText={(text) => setNombre(text)} value={nombre} keyboardType="text" autoCapitalize="none" />
+                  <Input placeholder="Apellidos" onChangeText={(text) => setApellido(text)} value={apellido} keyboardType="text" autoCapitalize="none" />
+                  <Input placeholder="Email" onChangeText={(text) => setEmail(text)} value={email} keyboardType="email-address" autoCapitalize="none" />
+                  <InputMask value={telefono} onChangeText={setTelefono} placeholder="Teléfono" mask="9999-9999" />
+                  {tipoPersona.length > 0 && (
+                    <Dropdown
+                      items={tipoPersona}
+                      placeholder="Selecciona el tipo de persona"
+                      searchPlaceholder="Buscar..."
+                      onValueChange={handleTipoPersonaChange}
+                      defaultValue={selectedTipoPersona}
+                    />
+                  )}
+                  {selectedTipoPersona === 2 ? (
+                    <>
+                      <Input placeholder="Nombre Empresa" onChangeText={(text) => setNombreEmpresa(text)} value={nombreEmpresa} keyboardType="text" autoCapitalize="none" />
+                      <Input placeholder="Nombre Comercial" onChangeText={(text) => setNombreComercial(text)} value={nombreComercial} keyboardType="text" autoCapitalize="none" />
+                      {giros.length > 0 && (
+                        <Dropdown
+                          items={giros}
+                          placeholder="Selecciona un giro"
+                          searchPlaceholder="Buscar..."
+                          onValueChange={handleGirosChange}
+                          defaultValue={selectedGiro}
+                        />
+                      )}
+                      <InputMask value={nrc} onChangeText={setNrc} placeholder="NRC" mask="999999-9" />
+                      <InputMask value={nit} onChangeText={setNit} placeholder="NIT" mask="9999-999999-999-9" />
+                      <CheckBox
+                        title="Soy Contribuyente"
+                        checked={isContribuyenteChecked}
+                        onPress={() => setIsContribuyenteChecked(!isContribuyenteChecked)}
+                        containerStyle={styles.checkbox}
+                        textStyle={styles.label}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <InputMask value={dui} onChangeText={setDui} placeholder="DUI" mask="99999999-9" />
+                    </>
+                  )}
+                  {departamentos.length > 0 && (
+                    <Dropdown
+                      items={departamentos}
+                      placeholder="Selecciona un departamento"
+                      searchPlaceholder="Buscar..."
+                      onValueChange={handleDepartamentoChange}
+                      defaultValue={selectedDepartamento}
+                    />
+                  )}
+                  {municipios.length > 0 && (
+                    <>
+                      <Dropdown
+                        items={municipios}
+                        placeholder="Selecciona un municipio"
+                        searchPlaceholder="Buscar..."
+                        onValueChange={handleMunicipioChange}
+                        defaultValue={selectedMunicipio}
+                      />
+                      <TextArea value={direccion} onChangeText={(text) => setDireccion(text)} placeholder="Ingresa la direccion" />
+                    </>
+                  )}
+                  <Button title={isChangePassword ? 'Cancelar' : 'Cambiar contraseña'} onPress={handleChangePassword} typeButton={isChangePassword ? 'danger' : 'success'} />
+                  {isChangePassword && (
+                    <>
+                      <Input placeholder="Contraseña" onChangeText={(text) => setPassword(text)} value={password} secureTextEntry />
+                      <Input placeholder="Confirmar Contraseña" onChangeText={(text) => setConfirmPassword(text)} value={confirmPassword} secureTextEntry />
+                    </>
+                  )}
+                  <Animatable.View animation="fadeInUp" duration={1500} delay={500} style={styles.buttonContainer}>
+                    <Button title="Actualizar" onPress={handleActualizarPerfil} typeButton="primary" />
+                    <Button title="Cancelar" onPress={toggleEdit} typeButton="danger" />
+                  </Animatable.View>
+                </>
+              )
+            }
+            {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
+          </View>
         </MainContent>
-    );
-};
+      );
+    };
 
-const styles = StyleSheet.create({
+const lightStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -708,5 +601,99 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
+
+const darkStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#4444',
+        padding: 20,
+        borderRadius: 15,
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#444',
+        paddingBottom: 20,
+    },
+    profileImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: '#333',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    name: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    empresa: {
+        fontSize: 16,
+        color: '#aaa',
+        marginBottom: 10,
+    },
+    email: {
+        fontSize: 16,
+        color: '#aaa',
+        marginBottom: 10,
+    },
+    profileInfo: {
+        marginBottom: 20,
+    },
+    infoItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    iconContainer: {
+        marginRight: 15,
+    },
+    textContainer: {
+        flex: 1,
+    },
+    label: {
+        fontSize: 14,
+        color: '#888',
+        fontWeight: 'bold',
+    },
+    value: {
+        fontSize: 16,
+        color: '#fff',
+    },
+    buttonContainer: {
+        marginTop: 20,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    modalContent: {
+        backgroundColor: '#222',
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff',
+        marginBottom: 20,
+    },
+    input: {
+        width: '100%',
+        backgroundColor: '#333',
+        color: '#fff',
+        padding: 15,
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+});
+
 
 export default ProfileScreen;

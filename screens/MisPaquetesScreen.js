@@ -1,9 +1,11 @@
 import React from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import { StyleSheet, View, FlatList, Text, useColorScheme } from "react-native";
 import MainContent from "../components/MainContent";
 import DetailsCard from "../components/DetailsCard";
 
 const MisPaquetesScreen = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const styles = getStyles(colorScheme);
   const orders = [
     { id: 1, title: "Orden 1", description: "Descripción de la orden 1", status: "Completada" },
     { id: 2, title: "Orden 2", description: "Descripción de la orden 2", status: "Pendiente" },
@@ -29,7 +31,7 @@ const MisPaquetesScreen = ({ navigation }) => {
             />
           )}
           ListEmptyComponent={() => (
-            <Text>No hay órdenes disponibles</Text>
+            <Text style={styles.noOrdersText}>No hay órdenes disponibles</Text>
           )}
         />
       </View>
@@ -37,13 +39,36 @@ const MisPaquetesScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#f5f5f5",
-  },
-});
+const getStyles = (colorScheme) => {
+  const lightStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: "#f5f5f5",
+    },
+    noOrdersText: {
+      color: "#555",
+      textAlign: "center",
+      marginTop: 20,
+    },
+  });
+
+  const darkStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: "#4444",
+    },
+    noOrdersText: {
+      color: "#ddd",
+      textAlign: "center",
+      marginTop: 20,
+    },
+  });
+
+  return colorScheme === 'dark' ? darkStyles : lightStyles;
+};
+
 
 const getStatusType = (status) => {
   switch (status) {

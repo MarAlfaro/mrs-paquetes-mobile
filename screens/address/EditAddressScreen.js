@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import MainContent from "../../components/MainContent";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
@@ -15,6 +15,9 @@ import Dropdown from "../../components/Dropdown";
 import Input from "../../components/Input";
 
 const EditAddressScreen = ({ navigation }) => {
+    const colorScheme = useColorScheme();
+    const styles = getStyles(colorScheme);
+
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
     const [profile, setProfile] = useState({});
@@ -281,56 +284,112 @@ const EditAddressScreen = ({ navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colorScheme) => {
+  const lightStyles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        padding: 20,
-        borderRadius: 15,
+      flex: 1,
+      backgroundColor: '#fff',
+      padding: 20,
+      borderRadius: 15,
     },
     header: {
-        alignItems: 'center',
-        marginBottom: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
-        paddingBottom: 20,
+      alignItems: 'center',
+      marginBottom: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: '#E0E0E0',
+      paddingBottom: 20,
     },
     profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: '#E0E0E0',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      backgroundColor: '#E0E0E0',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
     },
     name: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#333',
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#333',
     },
     profileInfo: {
-        marginBottom: 20,
+      marginBottom: 20,
     },
     label: {
-        fontSize: 14,
-        color: '#666',
-        fontWeight: 'bold',
+      fontSize: 14,
+      color: '#666',
+      fontWeight: 'bold',
     },
     value: {
-        fontSize: 16,
-        color: '#333',
+      fontSize: 16,
+      color: '#333',
     },
     buttonContainer: {
-        marginTop: 20,
+      marginTop: 20,
     },
     input: {
-        width: '100%',
-        backgroundColor: '#f4f4f4',
-        padding: 15,
-        borderRadius: 5,
-        marginBottom: 10,
+      width: '100%',
+      backgroundColor: '#f4f4f4',
+      padding: 15,
+      borderRadius: 5,
+      marginBottom: 10,
     },
-});
+  });
+
+  const darkStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#4444',
+      padding: 20,
+      borderRadius: 15,
+    },
+    header: {
+      alignItems: 'center',
+      marginBottom: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: '#555',
+      paddingBottom: 20,
+    },
+    profileImage: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      backgroundColor: '#555',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    name: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#fff',
+    },
+    profileInfo: {
+      marginBottom: 20,
+    },
+    label: {
+      fontSize: 14,
+      color: '#aaa',
+      fontWeight: 'bold',
+    },
+    value: {
+      fontSize: 16,
+      color: '#fff',
+    },
+    buttonContainer: {
+      marginTop: 20,
+    },
+    input: {
+      width: '100%',
+      backgroundColor: '#444',
+      padding: 15,
+      borderRadius: 5,
+      marginBottom: 10,
+    },
+  });
+
+  return colorScheme === 'dark' ? darkStyles : lightStyles;
+};
 
 export default EditAddressScreen;

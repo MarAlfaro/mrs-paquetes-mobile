@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import MainContent from "../../components/MainContent";
 import Loader from '../../components/Loader';
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,12 @@ import Errors from '../../components/Errors';
 import { ListItem, Button } from "@rneui/base";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { addressSuccess } from "../../redux/slice/addressSlice";
-import Modal from 'react-native-modal';  // Importa el componente Modal
+import Modal from 'react-native-modal';
 
 const AddressScreen = ({ navigation }) => {
+    const colorScheme = useColorScheme();
+    const styles = getStyles(colorScheme);
+
     const dispatch = useDispatch();
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -218,62 +221,146 @@ const AddressScreen = ({ navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
+const getStyles = (colorScheme) => {
+    const lightStyles = StyleSheet.create({
+      container: {
         flex: 1,
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 15,
-    },
-    header: {
+      },
+      header: {
         alignItems: 'center',
         marginBottom: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#E0E0E0',
         paddingBottom: 20,
-    },
-    name: {
+      },
+      name: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
-    },
-    subtitle: {
+      },
+      subtitle: {
         fontSize: 16,
         color: '#555',
         marginBottom: 10,
-    },
-    noAddressText: {
+      },
+      noAddressText: {
         fontSize: 16,
         color: '#555',
         textAlign: 'center',
         marginTop: 20,
-    },
-    modalContent: {
+      },
+      modalContent: {
         backgroundColor: 'white',
         padding: 20,
         borderRadius: 10,
         alignItems: 'center',
-    },
-    modalTitle: {
+      },
+      modalTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
-    },
-    modalMessage: {
+      },
+      modalMessage: {
         fontSize: 16,
         marginBottom: 20,
-    },
-    modalButtons: {
+      },
+      modalButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-    },
-    modalCancelButton: {
+      },
+      modalButton: {
+        padding: 10,
+        borderRadius: 5,
+        width: '48%',
+        alignItems: 'center',
+      },
+      modalCancelButton: {
         backgroundColor: '#ccc',
-    },
-    modalDeleteButton: {
+      },
+      modalDeleteButton: {
         backgroundColor: 'red',
-    },
-});
+      },
+      modalButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+      },
+    });
+  
+    const darkStyles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: '#4444',
+        padding: 20,
+        borderRadius: 15,
+      },
+      header: {
+        alignItems: 'center',
+        marginBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#555',
+        paddingBottom: 20,
+      },
+      name: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+      },
+      subtitle: {
+        fontSize: 16,
+        color: '#ddd',
+        marginBottom: 10,
+      },
+      noAddressText: {
+        fontSize: 16,
+        color: '#ddd',
+        textAlign: 'center',
+        marginTop: 20,
+      },
+      modalContent: {
+        backgroundColor: '#444',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#fff',
+      },
+      modalMessage: {
+        fontSize: 16,
+        marginBottom: 20,
+        color: '#ddd',
+      },
+      modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+      },
+      modalButton: {
+        padding: 10,
+        borderRadius: 5,
+        width: '48%',
+        alignItems: 'center',
+      },
+      modalCancelButton: {
+        backgroundColor: '#555',
+      },
+      modalDeleteButton: {
+        backgroundColor: 'darkred',
+      },
+      modalButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+      },
+    });
+  
+    return colorScheme === 'dark' ? darkStyles : lightStyles;
+  };
 
 export default AddressScreen;
