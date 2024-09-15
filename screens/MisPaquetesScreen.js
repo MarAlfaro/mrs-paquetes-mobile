@@ -63,12 +63,9 @@ const MisPaquetesScreen = ({ navigation }) => {
     }
   };
 
-
-  const orders = [
-    { id: 1, title: "Orden 1", description: "Descripción de la orden 1", status: "Completada" },
-    { id: 2, title: "Orden 2", description: "Descripción de la orden 2", status: "Pendiente" },
-    // Agrega más órdenes aquí según tu estructura de datos
-  ];
+  const handleCloseErrors = () => {
+    setErrors(null);
+  };
 
   return (
     <MainContent>
@@ -97,7 +94,7 @@ const MisPaquetesScreen = ({ navigation }) => {
           typeButton="primary"
         />
 
-        {orden !== null ? (
+        {orden !== null && (
           <>
             <DetailsCard
               title={orden.numero_seguimiento}
@@ -119,14 +116,8 @@ const MisPaquetesScreen = ({ navigation }) => {
               }
               iconName="info-circle"
               typeCard="info"
-              // statusText={item.status}
-              onPress={() => {
-                console.log("La tarjeta fue clickeada");
-              }}
             />
           </>
-        ) : (
-          <></>
         )}
 
         {/* <FlatList
