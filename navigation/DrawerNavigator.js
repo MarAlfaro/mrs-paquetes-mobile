@@ -41,7 +41,7 @@ const DrawerNavigator = () => {
             }}
           />
           <Drawer.Screen
-            name="Mis Paquetes"
+            name="Tracking"
             component={MisPaquetesScreen}
             options={{
               drawerIcon: ({ color, size }) => (

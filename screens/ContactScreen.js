@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
 import MainContent from "../components/MainContent";
 import DetailsCard from "../components/DetailsCard";
+import { Theme } from "../theme/Theme";
 
 const ContactScreen = ({ navigation }) => {
 
@@ -19,23 +20,25 @@ const ContactScreen = ({ navigation }) => {
 
     return (
         <MainContent>
-            <DetailsCard
-                title="Contactos de la Empresa"
-                description="Puedes contactarno a traves de nuestro equipo de expertos."
-                typeCard="success"
-            />
+            <View style={styles.container}>
+                <DetailsCard
+                    title="Contactos de la Empresa"
+                    description="Puedes contactarno a traves de nuestro equipo de expertos."
+                    typeCard="success"
+                />
 
-            <DetailsCard
-                title="John Doe"
-                description={primerContacto}
-                typeCard="primary"
-            />
+                <DetailsCard
+                    title="John Doe"
+                    description={primerContacto}
+                    typeCard="primary"
+                />
 
-            <DetailsCard
-                title="Jane Smith"
-                description={segundoContacto}
-                typeCard="warning"
-            />
+                <DetailsCard
+                    title="Jane Smith"
+                    description={segundoContacto}
+                    typeCard="warning"
+                />
+            </View>
         </MainContent>
     );
 };
@@ -46,10 +49,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
-        margin: 10,
         marginTop: 10,
         backgroundColor: '#FFFFFF',
-        borderRadius: 15,
+        borderRadius: 10,
+        backgroundColor: Theme.light.surface,
+        $dark: {
+            backgroundColor: Theme.dark.primary
+        }
     },
     title: {
         fontSize: 24,

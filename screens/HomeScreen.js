@@ -46,9 +46,9 @@ const HomeScreen = ({ navigation }) => {
         setOrders(response);
       } catch (error) {
         Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: `Error al cargar las órdenes.`
+          type: 'info',
+          text1: 'Aviso',
+          text2: `No tienes ordenes disponibles!`
         });
       }
     };
@@ -85,21 +85,21 @@ const HomeScreen = ({ navigation }) => {
                   description={`Concepto: ${order.concepto}\nTotal a pagar: $${order.total_pagar}`}
                   typeCard="primary"
                   statusText={`Paquetes: ${order.detalles.length}`}
-                  onPress={() =>  handleOrder(order.detalles)}
+                  onPress={() => handleOrder(order.detalles)}
                 />
               ))
             ) : (
               <DetailsCard
-                  title="Información"
-                  description="No hay órdenes disponibles"
-                  typeCard="warning"
+                title="Información"
+                description="No hay órdenes disponibles"
+                typeCard="warning"
               />
             )}
           </>
 
         ) : (
           <>
-            <View style={styles.continerNotProfile}>
+            <View style={styles.containerNotProfile}>
               <Text style={styles.title}>Para seguir usando a Mr. Paquetes! crea tu perfil </Text>
               <Button
                 title="Crear Perfil"
@@ -121,13 +121,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: Theme.light.surface,
+    $dark: {
+      backgroundColor: Theme.dark.primary
+    }
   },
-  continerNotProfile: {
+  containerNotProfile: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    margin: 10,
     marginTop: 50,
     marginBottom: 40,
     backgroundColor: Theme.light.surface,

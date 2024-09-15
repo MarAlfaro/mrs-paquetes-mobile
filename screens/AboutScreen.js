@@ -35,7 +35,6 @@ const getStyles = (colorScheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: 10,
-      margin: 10,
       marginTop: 10,
       backgroundColor: '#FFFFFF',
       borderRadius: 15,
@@ -67,9 +66,8 @@ const getStyles = (colorScheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: 10,
-      margin: 10,
       marginTop: 10,
-      backgroundColor: '#333',
+      backgroundColor: Theme.dark.primary,
       borderRadius: 15,
     },
     logo: {

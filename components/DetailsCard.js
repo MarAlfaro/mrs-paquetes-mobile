@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
+import { Theme } from '../theme/Theme';
 
 const DetailsCard = ({ title, description, iconName, typeCard, statusText, onPress }) => {
+
+    const colorScheme = useColorScheme();
+
     const cardColors = {
         default: 'transparent',
         primary: '#04aad6',
@@ -22,7 +26,7 @@ const DetailsCard = ({ title, description, iconName, typeCard, statusText, onPre
             activeOpacity={0.9}
         >
             <Animatable.View animation="fadeIn" style={[styles.card, { borderLeftColor: borderColor }]}>
-                <Icon name={iconName} size={24} color="#000" style={styles.icon} />
+                <Icon name={iconName} size={24} color={colorScheme === 'dark' ? '#FFFFFF' : '#000000'} style={styles.icon} />
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>{title}</Text>
                     {Array.isArray(description) ? (
@@ -65,6 +69,9 @@ const styles = StyleSheet.create({
         borderLeftWidth: 6,
         borderLeftColor: 'transparent',
         position: 'relative',
+        $dark: {
+            backgroundColor: Theme.dark.primaryDark,
+        }
     },
     statusTextContainer: {
         position: 'absolute',
@@ -90,12 +97,21 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 8,
+        $dark: {
+            color: '#ffffff',
+        }
     },
     description: {
         fontSize: 16,
+        $dark: {
+            color: '#ffffff',
+        }
     },
     descriptionKey: {
         fontWeight: 'bold',
+        $dark: {
+            color: '#ffffff',
+        }
     },
 });
 
