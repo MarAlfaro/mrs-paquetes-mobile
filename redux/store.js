@@ -5,6 +5,7 @@ import profileReducer from "./slice/profileSlice";
 import recoverReducer from "./slice/recoverSlice";
 import addressReducer from "./slice/addressSlice";
 import orderDetailsReducer from "./slice/orderDetailsSlice";
+import trackingReducer from "./slice/trackingSlice";
 
 export default configureStore({
     reducer : {
@@ -13,6 +14,7 @@ export default configureStore({
         profile: profileReducer,
         recover: recoverReducer,
         address: addressReducer,
-        orderDetails: orderDetailsReducer
+        orderDetails: orderDetailsReducer,
+        tracking: trackingReducer
     }
 });

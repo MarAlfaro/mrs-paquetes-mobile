@@ -11,6 +11,7 @@ import RecoverPasswordScreen from "../screens/singin/RecoverPasswordScreen";
 import AddAddressScreen from "../screens/address/AddAddressScreen";
 import EditAddressScreen from "../screens/address/EditAddressScreen";
 import OrderDetailsScreen from "../screens/OrderDetailsScreen";
+import PaquetesTrackingScreen from "../screens/PaquetesTrackingScreen";
 
 
 const Stack = createStackNavigator();
@@ -42,6 +43,16 @@ const MainStackNavigator = () => {
                 options={{
                     headerShown: true,
                     title: "Detalles de la orden",
+                    headerBackTitleVisible: false,
+                    headerLeft: () => null,
+                }}
+            /> 
+            <Stack.Screen 
+                name="PaquetesTrackingScreen" 
+                component={PaquetesTrackingScreen} 
+                options={{
+                    headerShown: true,
+                    title: "Tracking",
                     headerBackTitleVisible: false,
                     headerLeft: () => null,
                 }}

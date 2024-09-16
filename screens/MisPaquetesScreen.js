@@ -6,13 +6,15 @@ import { Theme } from "../theme/Theme";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { Icon } from "react-native-elements";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../api/client";
 import Toast from "react-native-toast-message";
 import Loader from "../components/Loader";
 import Errors from "../components/Errors";
+import { trackingSuccess } from "../redux/slice/trackingSlice";
 
 const MisPaquetesScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const colorScheme = useColorScheme();
   const styles = getStyles(colorScheme);
   const user = useSelector(state => state.login.user);
@@ -67,6 +69,18 @@ const MisPaquetesScreen = ({ navigation }) => {
     setErrors(null);
   };
 
+  const handleTracking = (id, numeroSeguimiento) => {
+    dispatch(trackingSuccess(
+      {
+        tracking: {
+          id: id,
+          numeroSeguimiento: numeroSeguimiento
+        }
+      }
+    ));
+    navigation.navigate("PaquetesTrackingScreen");
+  }
+
   return (
     <MainContent>
       <View style={styles.container}>
@@ -117,28 +131,37 @@ const MisPaquetesScreen = ({ navigation }) => {
               iconName="info-circle"
               typeCard="info"
             />
+
+            {orden.paquetes.length > 0 && (
+              <>
+                <Text style={styles.title}>Paquetes</Text>
+
+                {
+                  orden.paquetes.map((paquete, index) => (
+                    <DetailsCard
+                      key={index}
+                      title={`Descripción: ${paquete.descripcion_contenido}`}
+                      description={[
+                        {
+                          'key': 'Fecha estimada de entrega',
+                          'value': paquete.fecha_entrega_estimada
+                        },
+                        {
+                          'key': 'Peso',
+                          'value': paquete.peso
+                        }
+                      ]}
+                      iconName="archive"
+                      typeCard={index % 2 == 0 ? "primary" : "success"}
+                      onPress={() => handleTracking(paquete.id, orden.numero_seguimiento)}
+                    />
+                  ))
+                }
+              </>
+            )}
+
           </>
         )}
-
-        {/* <FlatList
-          data={orders}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <DetailsCard
-              title={item.title}
-              description={item.description}
-              iconName="info-circle"
-              typeCard={getStatusType(item.status)}
-              statusText={item.status}
-              onPress={() => {
-                console.log("La tarjeta fue clickeada");
-              }}
-            />
-          )}
-          ListEmptyComponent={() => (
-            <Text style={styles.noOrdersText}>No hay órdenes disponibles</Text>
-          )}
-        /> */}
 
         {errors && <Errors errors={errors} onClose={handleCloseErrors} />}
       </View>
