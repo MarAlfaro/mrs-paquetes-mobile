@@ -165,6 +165,7 @@ const AddressScreen = ({ navigation }) => {
                             <ListItem.Swipeable
                                 key={index}
                                 bottomDivider
+                                containerStyle={styles.swipeableContainer} 
                                 leftContent={(reset) => (
                                     <Button
                                         title="Eliminar"
@@ -182,11 +183,11 @@ const AddressScreen = ({ navigation }) => {
                                     />
                                 )}
                             >
-                                <ListItem.Content>
-                                    <ListItem.Title>{direccion.nombre_contacto}</ListItem.Title>
-                                    <ListItem.Subtitle>{direccion.direccion}</ListItem.Subtitle>
-                                    <ListItem.Subtitle>{direccion.telefono}</ListItem.Subtitle>
-                                    <ListItem.Subtitle>{direccion.referencia}</ListItem.Subtitle>
+                                <ListItem.Content >
+                                    <ListItem.Title style={styles.name}>{direccion.nombre_contacto}</ListItem.Title>
+                                    <ListItem.Subtitle style={styles.subtitle}>{direccion.direccion}</ListItem.Subtitle>
+                                    <ListItem.Subtitle style={styles.subtitle}>{direccion.telefono}</ListItem.Subtitle>
+                                    <ListItem.Subtitle style={styles.subtitle}>{direccion.referencia}</ListItem.Subtitle>
                                 </ListItem.Content>
                                 <ListItem.Chevron />
                             </ListItem.Swipeable>
@@ -288,6 +289,13 @@ const getStyles = (colorScheme) => {
         color: '#fff',
         fontWeight: 'bold',
       },
+      swipeableContainer: {
+        backgroundColor: '#f5f5f5',
+        color: '#333',
+      },
+      listItemContentLetra: {
+        Color: 'black', 
+      },
     });
   
     const darkStyles = StyleSheet.create({
@@ -357,6 +365,15 @@ const getStyles = (colorScheme) => {
       modalButtonText: {
         color: '#fff',
         fontWeight: 'bold',
+      },
+      swipeableContainer: {
+        backgroundColor: '#454444',        
+      },
+      listItemContent: {
+        Color: 'white', 
+      },
+      listItemContentLetra: {
+        Color: 'white', 
       },
     });
   
