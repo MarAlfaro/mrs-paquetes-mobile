@@ -4,13 +4,21 @@
   },
   "build": {
     "production": {
+      "android": {
+        "buildType": "apk",
+         "gradleCommand": ":app:assembleRelease"
+      },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.53.216/api"
+        "EXPO_PUBLIC_API_URL": "https://backend.mrspaquetes.click/api"
       }
     },
     "test": {
+      "android": {
+        "buildType": "apk",
+         "gradleCommand": ":app:assembleRelease"
+      },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.53.216/api"
+        "EXPO_PUBLIC_API_URL": "https://backend.mrspaquetes.click/api"
       }
     }
   }
