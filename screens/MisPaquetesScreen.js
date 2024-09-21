@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Text, useColorScheme } from "react-native";
+import { StyleSheet, View, Text, useColorScheme, Share } from "react-native"; // Importar Share
 import MainContent from "../components/MainContent";
 import DetailsCard from "../components/DetailsCard";
 import { Theme } from "../theme/Theme";
@@ -30,7 +30,7 @@ const MisPaquetesScreen = ({ navigation }) => {
     setLoading(true);
     try {
       const response = await fetchData('seguimiento-orden',
-        { 'numero_seguimiento': numeroSeguimiento },
+        { 'numero_tracking': numeroSeguimiento },
         {
           'Authorization': `Bearer ${user.token}`
         }
@@ -49,7 +49,7 @@ const MisPaquetesScreen = ({ navigation }) => {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: `No se encontro ninguna orden!!`
+          text2: `No se encontró ninguna orden!!`
         });
       }
 
@@ -57,7 +57,7 @@ const MisPaquetesScreen = ({ navigation }) => {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: `No se encontro ninguna orden!!`
+        text2: `No se encontró ninguna orden!!`
       });
       setErrors(error);
     } finally {
@@ -69,33 +69,31 @@ const MisPaquetesScreen = ({ navigation }) => {
     setErrors(null);
   };
 
-  const handleTracking = (id, numeroSeguimiento) => {
-    dispatch(trackingSuccess(
-      {
-        tracking: {
-          id: id,
-          numeroSeguimiento: numeroSeguimiento
-        }
-      }
-    ));
-    navigation.navigate("PaquetesTrackingScreen");
-  }
+  // Función para compartir el número de seguimiento
+  const handleShare = async (numeroSeguimiento) => {
+    try {
+      await Share.share({
+        message: `El número de seguimiento de tu paquete es: ${numeroSeguimiento}`
+      });
+    } catch (error) {
+      console.log('Error al compartir:', error.message);
+    }
+  };
 
   return (
     <MainContent>
       <View style={styles.container}>
-
         {loading && <Loader />}
 
         <View style={styles.header}>
           <View style={styles.seguimientoImage}>
             <Icon name="archive" size={100} color="#4267B2" />
           </View>
-          <Text style={styles.title}> Ingresa tu numero de seguimiento y reastrea tus paquetes!</Text>
+          <Text style={styles.title}> Ingresa tu número de seguimiento y rastrea tus paquetes!</Text>
         </View>
 
         <Input
-          placeholder="Numero de seguimiento"
+          placeholder="Número de seguimiento"
           onChangeText={(text) => setNumeroSeguimientp(text)}
           value={numeroSeguimiento}
           keyboardType="email-address"
@@ -110,24 +108,19 @@ const MisPaquetesScreen = ({ navigation }) => {
 
         {orden !== null && (
           <>
+            <Button
+              title="Compartir número de seguimiento"
+              onPress={() => handleShare(orden.numero_tracking)}
+              typeButton="success"
+            />
+            
             <DetailsCard
-              title={orden.numero_seguimiento}
-              description={
-                [
-                  {
-                    'key': "Concepto",
-                    'value': orden.concepto,
-                  },
-                  {
-                    'key': "Pago",
-                    'value': orden.estado_pago,
-                  },
-                  {
-                    'key': "Monto",
-                    'value': orden.total_pagar,
-                  },
-                ]
-              }
+              title={orden.numero_tracking}
+              description={[
+                { 'key': "Concepto", 'value': orden.concepto },
+                { 'key': "Pago", 'value': orden.estado_pago },
+                { 'key': "Monto", 'value': orden.total_pagar }
+              ]}
               iconName="info-circle"
               typeCard="info"
             />
@@ -142,24 +135,17 @@ const MisPaquetesScreen = ({ navigation }) => {
                       key={index}
                       title={`Descripción: ${paquete.descripcion_contenido}`}
                       description={[
-                        {
-                          'key': 'Fecha estimada de entrega',
-                          'value': paquete.fecha_entrega_estimada
-                        },
-                        {
-                          'key': 'Peso',
-                          'value': paquete.peso
-                        }
+                        { 'key': 'Fecha estimada de entrega', 'value': paquete.fecha_entrega_estimada },
+                        { 'key': 'Peso', 'value': paquete.peso }
                       ]}
                       iconName="archive"
-                      typeCard={index % 2 == 0 ? "primary" : "success"}
+                      typeCard={index % 2 === 0 ? "primary" : "success"}
                       onPress={() => handleTracking(paquete.id, orden.numero_seguimiento)}
                     />
                   ))
                 }
               </>
             )}
-
           </>
         )}
 
@@ -200,11 +186,6 @@ const getStyles = (colorScheme) => {
       fontWeight: 'bold',
       textAlign: 'center',
     },
-    noOrdersText: {
-      color: "#555",
-      textAlign: "center",
-      marginTop: 20,
-    },
   });
 
   const darkStyles = StyleSheet.create({
@@ -237,26 +218,9 @@ const getStyles = (colorScheme) => {
       fontWeight: 'bold',
       textAlign: 'center',
     },
-    noOrdersText: {
-      color: "#ddd",
-      textAlign: "center",
-      marginTop: 20,
-    },
   });
 
   return colorScheme === 'dark' ? darkStyles : lightStyles;
-};
-
-
-const getStatusType = (status) => {
-  switch (status) {
-    case "Completada":
-      return "success";
-    case "Pendiente":
-      return "warning";
-    default:
-      return "info";
-  }
 };
 
 export default MisPaquetesScreen;
