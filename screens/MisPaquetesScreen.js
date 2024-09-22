@@ -80,6 +80,18 @@ const MisPaquetesScreen = ({ navigation }) => {
     }
   };
 
+  const handleTracking = (id, numeroSeguimiento) => {
+    dispatch(trackingSuccess(
+      {
+        tracking: {
+          id: id,
+          numeroSeguimiento: numeroSeguimiento
+        }
+      }
+    ));
+    navigation.navigate("PaquetesTrackingScreen");
+  }
+
   return (
     <MainContent>
       <View style={styles.container}>
