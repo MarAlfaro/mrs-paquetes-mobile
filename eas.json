@@ -6,7 +6,7 @@
     "production": {
       "android": {
         "buildType": "apk",
-         "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleRelease"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://backend.mrspaquetes.click/api"
@@ -15,7 +15,7 @@
     "test": {
       "android": {
         "buildType": "apk",
-         "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleRelease"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://backend.mrspaquetes.click/api"
