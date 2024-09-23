@@ -131,7 +131,7 @@ const MisPaquetesScreen = ({ navigation }) => {
               description={[
                 { 'key': "Concepto", 'value': orden.concepto },
                 { 'key': "Pago", 'value': orden.estado_pago },
-                { 'key': "Monto", 'value': orden.total_pagar }
+                { 'key': "Monto $", 'value': orden.total_pagar }
               ]}
               iconName="info-circle"
               typeCard="info"
@@ -148,7 +148,7 @@ const MisPaquetesScreen = ({ navigation }) => {
                       title={`Descripción: ${paquete.descripcion_contenido}`}
                       description={[
                         { 'key': 'Fecha estimada de entrega', 'value': paquete.fecha_entrega_estimada },
-                        { 'key': 'Peso', 'value': paquete.peso }
+                        { 'key': 'Peso (kg)', 'value': paquete.peso }
                       ]}
                       iconName="archive"
                       typeCard={index % 2 === 0 ? "primary" : "success"}
